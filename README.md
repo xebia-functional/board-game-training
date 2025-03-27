@@ -40,6 +40,13 @@
       - Bad Request Exception (Error 400): The parameter field cannot be empty.
       - Game not found (Error 404): No game matches the given parameters.
       - Internal Server Error (Error 500): Internal database error.
+  - `GET /search/{name)`: Retrieves game information by name from the BGG API.
+    - **Input**: `name`.
+    - **Output**: List of games results from the BGG API.
+    - **Exceptions**:
+        - Bad Request Exception (Error 400): The name field cannot be empty.
+        - Game not found (Error 404): No game matches the given parameters.
+        - Internal Server Error (Error 500): Internal database error.
   - `POST /{id}`: Creates a game using the "id" parameter from the public BGG API.
     - **Input**: `id` parameter.
     - **Output**: GameDTO object.
