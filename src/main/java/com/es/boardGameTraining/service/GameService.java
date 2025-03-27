@@ -69,4 +69,24 @@ public class GameService {
             throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage());
         }
     }
+
+    public GameDTO createGameWithId(String id) {
+        if (id == null || id.isBlank()) {
+            throw new BadRequestException("Id is required");
+        }
+
+        String url = UriComponentsBuilder
+                .fromHttpUrl("https://boardgamegeek.com/xmlapi2/thing")
+                .queryParam("id", id)
+                .toUriString();
+
+        try {
+            Game game = new Game();
+
+            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+            return parseXmlResponse.parseXmlResponseGameDto(response.getBody());
+        } catch (Exception e) {
+            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage());
+        }
+    }
 }
