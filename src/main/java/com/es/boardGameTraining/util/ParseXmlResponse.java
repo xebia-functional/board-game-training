@@ -1,6 +1,7 @@
 package com.es.boardGameTraining.util;
 
 import com.es.boardGameTraining.dto.GameBggDTO;
+import com.es.boardGameTraining.dto.GameDTO;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
@@ -42,5 +43,34 @@ public class ParseXmlResponse {
 
 
         return games;
+    }
+
+    public GameDTO parseXmlResponseGameDto(String xml) throws Exception {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.parse(new InputSource(new StringReader(xml)));
+
+        XPathFactory xPathFactory = XPathFactory.newInstance();
+        XPath xpath = xPathFactory.newXPath();
+        NodeList items = (NodeList) xpath.evaluate("/items/item", document, XPathConstants.NODESET);
+
+        for (int i = 0; i < items.getLength(); i++) {
+            Element item = (Element) items.item(i);
+            String id = item.getAttribute("id");
+            String title = ((Element) item.getElementsByTagName("name").item(0)).getAttribute("value");
+
+            NodeList yearNodes = item.getElementsByTagName("yearpublished");
+            String year = (yearNodes.getLength() > 0) ? ((Element) yearNodes.item(0)).getAttribute("value") : null;
+
+            GameDTO game = new GameDTO();
+            game.setId(Long.valueOf(id));
+            game.setTitle(title);
+
+            game.setYear(year != null ? Integer.valueOf(year) : null);
+
+            return game;
+        }
+
+        return null;
     }
 }
