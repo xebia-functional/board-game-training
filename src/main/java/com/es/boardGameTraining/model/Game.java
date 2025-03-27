@@ -2,6 +2,8 @@ package com.es.boardGameTraining.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "games")
 public class Game {
@@ -12,23 +14,35 @@ public class Game {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "author")
-    private String author;
+    @Column(name = "authors")
+    private List<String> authors;
 
-    @Column(name = "artist")
-    private String artist;
+    @Column(name = "artists")
+    private List<String> artists;
 
     @Column(name = "year")
     private Integer year;
 
-    @Column(name = "players")
-    private Integer players;
+    @Column(name = "min_players")
+    private Integer minPlayers;
+
+    @Column(name = "max_players")
+    private Integer maxPlayers;
 
     @Column(name = "age")
     private Integer age;
 
+    @Column(name = "min_playtime")
+    private Integer minPlayTime;
+
+    @Column(name = "max_playtime")
+    private Integer maxPlayTime;
+
     @Column(name = "url_image")
     private String urlImage;
+
+    @Column(name = "url_thumbnail")
+    private String urlThumbnail;
 
     @Column(name = "type")
     private String type;
@@ -36,14 +50,18 @@ public class Game {
     public Game() {
     }
 
-    public Game(String title, String author, String artist, Integer year, Integer players, Integer age, String urlImage, String type) {
+    public Game(String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumbnail, String type) {
         this.title = title;
-        this.author = author;
-        this.artist = artist;
+        this.authors = authors;
+        this.artists = artists;
         this.year = year;
-        this.players = players;
+        this.minPlayers = minPlayers;
+        this.maxPlayers = maxPlayers;
         this.age = age;
+        this.minPlayTime = minPlayTime;
+        this.maxPlayTime = maxPlayTime;
         this.urlImage = urlImage;
+        this.urlThumbnail = urlThumbnail;
         this.type = type;
     }
 
@@ -63,20 +81,20 @@ public class Game {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public List<String> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(List<String> authors) {
+        this.authors = authors;
     }
 
-    public String getArtist() {
-        return artist;
+    public List<String> getArtists() {
+        return artists;
     }
 
-    public void setArtist(String artist) {
-        this.artist = artist;
+    public void setArtists(List<String> artists) {
+        this.artists = artists;
     }
 
     public Integer getYear() {
@@ -87,12 +105,44 @@ public class Game {
         this.year = year;
     }
 
-    public Integer getPlayers() {
-        return players;
+    public Integer getMaxPlayers() {
+        return maxPlayers;
     }
 
-    public void setPlayers(Integer players) {
-        this.players = players;
+    public void setMaxPlayers(Integer maxPlayers) {
+        this.maxPlayers = maxPlayers;
+    }
+
+    public Integer getMinPlayers() {
+        return minPlayers;
+    }
+
+    public void setMinPlayers(Integer minPlayers) {
+        this.minPlayers = minPlayers;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Integer getMinPlayTime() {
+        return minPlayTime;
+    }
+
+    public void setMinPlayTime(Integer minPlayTime) {
+        this.minPlayTime = minPlayTime;
+    }
+
+    public Integer getMaxPlayTime() {
+        return maxPlayTime;
+    }
+
+    public void setMaxPlayTime(Integer maxPlayTime) {
+        this.maxPlayTime = maxPlayTime;
     }
 
     public String getUrlImage() {
@@ -103,12 +153,12 @@ public class Game {
         this.urlImage = urlImage;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getUrlThumbnail() {
+        return urlThumbnail;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setUrlThumbnail(String urlThumbnail) {
+        this.urlThumbnail = urlThumbnail;
     }
 
     public String getType() {
