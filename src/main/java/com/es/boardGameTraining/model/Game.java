@@ -41,8 +41,8 @@ public class Game {
     @Column(name = "url_image")
     private String urlImage;
 
-    @Column(name = "url_thumnail")
-    private String urlThumnail;
+    @Column(name = "url_thumbnail")
+    private String urlThumbnail;
 
     @Column(name = "type")
     private String type;
@@ -50,7 +50,7 @@ public class Game {
     public Game() {
     }
 
-    public Game(String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumnail, String type) {
+    public Game(String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumbnail, String type) {
         this.title = title;
         this.authors = authors;
         this.artists = artists;
@@ -61,7 +61,7 @@ public class Game {
         this.minPlayTime = minPlayTime;
         this.maxPlayTime = maxPlayTime;
         this.urlImage = urlImage;
-        this.urlThumnail = urlThumnail;
+        this.urlThumbnail = urlThumbnail;
         this.type = type;
     }
 
@@ -153,12 +153,12 @@ public class Game {
         this.urlImage = urlImage;
     }
 
-    public String getUrlThumnail() {
-        return urlThumnail;
+    public String getUrlThumbnail() {
+        return urlThumbnail;
     }
 
-    public void setUrlThumnail(String urlThumnail) {
-        this.urlThumnail = urlThumnail;
+    public void setUrlThumbnail(String urlThumbnail) {
+        this.urlThumbnail = urlThumbnail;
     }
 
     public String getType() {
