@@ -1,35 +1,49 @@
 package com.es.boardGameTraining.dto;
 
+import java.util.List;
+
 public class GameDTO {
     private Long id;
 
     private String title;
 
-    private String author;
+    private List<String> authors;
 
-    private String artist;
+    private List<String> artists;
 
     private Integer year;
 
-    private Integer players;
+    private Integer minPlayers;
+
+    private Integer maxPlayers;
 
     private Integer age;
 
+    private Integer minPlayTime;
+
+    private Integer maxPlayTime;
+
     private String urlImage;
+
+    private String urlThumbnail;
 
     private String type;
 
     public GameDTO() {}
 
-    public GameDTO(Long id, String title, String author, String artist, Integer year, Integer age, Integer players, String urlImage, String type) {
+    public GameDTO(Long id, String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer age, Integer maxPlayers, Integer maxPlayTime, Integer minPlayTime, String urlImage, String urlThumbnail, String type) {
         this.id = id;
         this.title = title;
-        this.author = author;
-        this.artist = artist;
+        this.authors = authors;
+        this.artists = artists;
         this.year = year;
+        this.minPlayers = minPlayers;
         this.age = age;
-        this.players = players;
+        this.maxPlayers = maxPlayers;
+        this.maxPlayTime = maxPlayTime;
+        this.minPlayTime = minPlayTime;
         this.urlImage = urlImage;
+        this.urlThumbnail = urlThumbnail;
         this.type = type;
     }
 
@@ -49,20 +63,20 @@ public class GameDTO {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public List<String> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(List<String> authors) {
+        this.authors = authors;
     }
 
-    public String getArtist() {
-        return artist;
+    public List<String> getArtists() {
+        return artists;
     }
 
-    public void setArtist(String artist) {
-        this.artist = artist;
+    public void setArtists(List<String> artists) {
+        this.artists = artists;
     }
 
     public Integer getYear() {
@@ -73,12 +87,12 @@ public class GameDTO {
         this.year = year;
     }
 
-    public Integer getPlayers() {
-        return players;
+    public Integer getMinPlayers() {
+        return minPlayers;
     }
 
-    public void setPlayers(Integer players) {
-        this.players = players;
+    public void setMinPlayers(Integer minPlayers) {
+        this.minPlayers = minPlayers;
     }
 
     public Integer getAge() {
@@ -89,12 +103,44 @@ public class GameDTO {
         this.age = age;
     }
 
+    public Integer getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public void setMaxPlayers(Integer maxPlayers) {
+        this.maxPlayers = maxPlayers;
+    }
+
+    public Integer getMinPlayTime() {
+        return minPlayTime;
+    }
+
+    public void setMinPlayTime(Integer minPlayTime) {
+        this.minPlayTime = minPlayTime;
+    }
+
+    public Integer getMaxPlayTime() {
+        return maxPlayTime;
+    }
+
+    public void setMaxPlayTime(Integer maxPlayTime) {
+        this.maxPlayTime = maxPlayTime;
+    }
+
     public String getUrlImage() {
         return urlImage;
     }
 
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
+    }
+
+    public String getUrlThumbnail() {
+        return urlThumbnail;
+    }
+
+    public void setUrlThumbnail(String urlThumbnail) {
+        this.urlThumbnail = urlThumbnail;
     }
 
     public String getType() {
