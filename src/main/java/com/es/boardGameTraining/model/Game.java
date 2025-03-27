@@ -23,8 +23,11 @@ public class Game {
     @Column(name = "year")
     private Integer year;
 
-    @Column(name = "players")
-    private Integer players;
+    @Column(name = "min_players")
+    private Integer minPlayers;
+
+    @Column(name = "max_players")
+    private Integer maxPlayers;
 
     @Column(name = "age")
     private Integer age;
@@ -47,18 +50,27 @@ public class Game {
     public Game() {
     }
 
-    public Game(String title, List<String> authors, List<String> artists, Integer year, Integer players, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumnail, String type) {
+    public Game(String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumnail, String type) {
         this.title = title;
         this.authors = authors;
         this.artists = artists;
         this.year = year;
-        this.players = players;
+        this.minPlayers = minPlayers;
+        this.maxPlayers = maxPlayers;
         this.age = age;
         this.minPlayTime = minPlayTime;
         this.maxPlayTime = maxPlayTime;
         this.urlImage = urlImage;
         this.urlThumnail = urlThumnail;
         this.type = type;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -93,12 +105,20 @@ public class Game {
         this.year = year;
     }
 
-    public Integer getPlayers() {
-        return players;
+    public Integer getMaxPlayers() {
+        return maxPlayers;
     }
 
-    public void setPlayers(Integer players) {
-        this.players = players;
+    public void setMaxPlayers(Integer maxPlayers) {
+        this.maxPlayers = maxPlayers;
+    }
+
+    public Integer getMinPlayers() {
+        return minPlayers;
+    }
+
+    public void setMinPlayers(Integer minPlayers) {
+        this.minPlayers = minPlayers;
     }
 
     public Integer getAge() {
