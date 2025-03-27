@@ -11,6 +11,9 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, name = "bgg_id")
+    private Long bggId;
+
     @Column(name = "title")
     private String title;
 
@@ -50,7 +53,8 @@ public class Game {
     public Game() {
     }
 
-    public Game(String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumbnail, String type) {
+    public Game(Long bggId, String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumbnail, String type) {
+        this.bggId = bggId;
         this.title = title;
         this.authors = authors;
         this.artists = artists;
@@ -71,6 +75,14 @@ public class Game {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getBggId() {
+        return bggId;
+    }
+
+    public void setBggId(Long bggId) {
+        this.bggId = bggId;
     }
 
     public String getTitle() {
