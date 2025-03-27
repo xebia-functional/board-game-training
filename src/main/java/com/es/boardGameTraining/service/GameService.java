@@ -26,7 +26,7 @@ public class GameService {
         try {
             games = gameRepository.findAll();
         } catch (Exception e) {
-            throw new DataBaseException("database unexpected error" + e.getMessage());
+            throw new DataBaseException("Database unexpected error: " + e.getMessage());
         }
 
         List<GameDTO> gameDTOs = new ArrayList<>();
