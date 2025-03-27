@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class Mapper {
     public GameDTO entityToDTO(Game entity) {
-        return new GameDTO(entity.getId(), entity.getTitle(), entity.getAuthor(), entity.getArtist(), entity.getYear(), entity.getAge(), entity.getPlayers(), entity.getUrlImage(), entity.getType());
+        return new GameDTO(entity.getId(), entity.getTitle(), entity.getAuthors(), entity.getArtists(), entity.getYear(), entity.getMinPlayers(), entity.getAge(), entity.getMaxPlayers(), entity.getMaxPlayTime(), entity.getMinPlayTime(), entity.getUrlImage(), entity.getUrlThumbnail(), entity.getType());
     }
 
     public Game dtoToEntity(GameDTO dto) {
-        return new Game(dto.getTitle(), dto.getAuthor(), dto.getArtist(), dto.getYear(), dto.getPlayers(), dto.getAge(), dto.getUrlImage(), dto.getType());
+        return new Game(dto.getTitle(), dto.getAuthors(), dto.getArtists(), dto.getYear(), dto.getMinPlayers(), dto.getMaxPlayers(), dto.getAge(), dto.getMinPlayTime(), dto.getMaxPlayTime(), dto.getUrlImage(), dto.getUrlThumbnail(), dto.getType());
     }
 }
