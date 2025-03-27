@@ -47,6 +47,10 @@ public class Game {
     @Column(name = "type")
     private String type;
 
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Play> plays;
+
+
     public Game() {
     }
 
@@ -167,5 +171,13 @@ public class Game {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<Play> getPlays() {
+        return plays;
+    }
+
+    public void setPlays(List<Play> plays) {
+        this.plays = plays;
     }
 }
