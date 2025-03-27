@@ -5,6 +5,8 @@ import java.util.List;
 public class GameDTO {
     private Long id;
 
+    private Long bggId;
+
     private String title;
 
     private List<String> authors;
@@ -31,17 +33,18 @@ public class GameDTO {
 
     public GameDTO() {}
 
-    public GameDTO(Long id, String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer age, Integer maxPlayers, Integer maxPlayTime, Integer minPlayTime, String urlImage, String urlThumbnail, String type) {
+    public GameDTO(Long id, Long bggId, String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumbnail, String type) {
         this.id = id;
+        this.bggId = bggId;
         this.title = title;
         this.authors = authors;
         this.artists = artists;
         this.year = year;
         this.minPlayers = minPlayers;
-        this.age = age;
         this.maxPlayers = maxPlayers;
-        this.maxPlayTime = maxPlayTime;
+        this.age = age;
         this.minPlayTime = minPlayTime;
+        this.maxPlayTime = maxPlayTime;
         this.urlImage = urlImage;
         this.urlThumbnail = urlThumbnail;
         this.type = type;
@@ -53,6 +56,14 @@ public class GameDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getBggId() {
+        return bggId;
+    }
+
+    public void setBggId(Long bggId) {
+        this.bggId = bggId;
     }
 
     public String getTitle() {
