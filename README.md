@@ -16,6 +16,8 @@ git clone https://github.com/xebia-functional/board-game-training.git
 Create or modify the `src/main/resources/application.properties` file with the following example configuration:
 
 ```properties
+spring.application.name=boardGameTraining
+
 # Server Configuration
 server.port=8080
 
