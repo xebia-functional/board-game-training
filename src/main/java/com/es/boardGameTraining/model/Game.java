@@ -2,6 +2,8 @@ package com.es.boardGameTraining.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "games")
 public class Game {
@@ -12,11 +14,11 @@ public class Game {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "author")
-    private String author;
+    @Column(name = "authors")
+    private List<String> authors;
 
-    @Column(name = "artist")
-    private String artist;
+    @Column(name = "artists")
+    private List<String> artists;
 
     @Column(name = "year")
     private Integer year;
@@ -27,8 +29,17 @@ public class Game {
     @Column(name = "age")
     private Integer age;
 
+    @Column(name = "min_playtime")
+    private Integer minPlayTime;
+
+    @Column(name = "max_playtime")
+    private Integer maxPlayTime;
+
     @Column(name = "url_image")
     private String urlImage;
+
+    @Column(name = "url_thumnail")
+    private String urlThumnail;
 
     @Column(name = "type")
     private String type;
@@ -36,23 +47,18 @@ public class Game {
     public Game() {
     }
 
-    public Game(String title, String author, String artist, Integer year, Integer players, Integer age, String urlImage, String type) {
+    public Game(String title, List<String> authors, List<String> artists, Integer year, Integer players, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumnail, String type) {
         this.title = title;
-        this.author = author;
-        this.artist = artist;
+        this.authors = authors;
+        this.artists = artists;
         this.year = year;
         this.players = players;
         this.age = age;
+        this.minPlayTime = minPlayTime;
+        this.maxPlayTime = maxPlayTime;
         this.urlImage = urlImage;
+        this.urlThumnail = urlThumnail;
         this.type = type;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -63,20 +69,20 @@ public class Game {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
+    public List<String> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(List<String> authors) {
+        this.authors = authors;
     }
 
-    public String getArtist() {
-        return artist;
+    public List<String> getArtists() {
+        return artists;
     }
 
-    public void setArtist(String artist) {
-        this.artist = artist;
+    public void setArtists(List<String> artists) {
+        this.artists = artists;
     }
 
     public Integer getYear() {
@@ -95,6 +101,30 @@ public class Game {
         this.players = players;
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Integer getMinPlayTime() {
+        return minPlayTime;
+    }
+
+    public void setMinPlayTime(Integer minPlayTime) {
+        this.minPlayTime = minPlayTime;
+    }
+
+    public Integer getMaxPlayTime() {
+        return maxPlayTime;
+    }
+
+    public void setMaxPlayTime(Integer maxPlayTime) {
+        this.maxPlayTime = maxPlayTime;
+    }
+
     public String getUrlImage() {
         return urlImage;
     }
@@ -103,12 +133,12 @@ public class Game {
         this.urlImage = urlImage;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getUrlThumnail() {
+        return urlThumnail;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setUrlThumnail(String urlThumnail) {
+        this.urlThumnail = urlThumnail;
     }
 
     public String getType() {
