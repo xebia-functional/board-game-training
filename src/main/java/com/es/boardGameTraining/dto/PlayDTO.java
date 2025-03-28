@@ -7,7 +7,7 @@ public class PlayDTO {
 
     private String location;
 
-    private List<PlayerDTO> playPlayers;
+    private List<PlayerDTO> players;
 
     private GameDTO game;
 
@@ -15,10 +15,10 @@ public class PlayDTO {
 
     public PlayDTO() {}
 
-    public PlayDTO(Long id, String location, List<PlayerDTO> playPlayers, GameDTO game, PlayerDTO winner) {
+    public PlayDTO(Long id, String location, List<PlayerDTO> players, GameDTO game, PlayerDTO winner) {
         this.id = id;
         this.location = location;
-        this.playPlayers = playPlayers;
+        this.players = players;
         this.game = game;
         this.winner = winner;
     }
@@ -39,12 +39,12 @@ public class PlayDTO {
         this.location = location;
     }
 
-    public List<PlayerDTO> getPlayPlayers() {
-        return playPlayers;
+    public List<PlayerDTO> getPlayers() {
+        return players;
     }
 
-    public void setPlayPlayers(List<PlayerDTO> playPlayers) {
-        this.playPlayers = playPlayers;
+    public void setPlayers(List<PlayerDTO> players) {
+        this.players = players;
     }
 
     public GameDTO getGame() {
