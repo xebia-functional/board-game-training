@@ -1,63 +1,40 @@
-package com.es.boardGameTraining.model;
-
-import jakarta.persistence.*;
+package com.es.boardGameTraining.dto;
 
 import java.util.List;
 
-@Entity
-@Table(name = "games")
-public class Game {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class GameDTO {
     private Long id;
 
-    @Column(unique = true, name = "bgg_id")
     private Long bggId;
 
-    @Column(name = "title")
     private String title;
 
-    @Column(name = "authors")
     private List<String> authors;
 
-    @Column(name = "artists")
     private List<String> artists;
 
-    @Column(name = "year")
     private Integer year;
 
-    @Column(name = "min_players")
     private Integer minPlayers;
 
-    @Column(name = "max_players")
     private Integer maxPlayers;
 
-    @Column(name = "age")
     private Integer age;
 
-    @Column(name = "min_playtime")
     private Integer minPlayTime;
 
-    @Column(name = "max_playtime")
     private Integer maxPlayTime;
 
-    @Column(name = "url_image")
     private String urlImage;
 
-    @Column(name = "url_thumbnail")
     private String urlThumbnail;
 
-    @Column(name = "type")
     private String type;
 
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Play> plays;
+    public GameDTO() {}
 
-
-    public Game() {
-    }
-
-    public Game(Long bggId, String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumbnail, String type) {
+    public GameDTO(Long id, Long bggId, String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumbnail, String type) {
+        this.id = id;
         this.bggId = bggId;
         this.title = title;
         this.authors = authors;
@@ -121,14 +98,6 @@ public class Game {
         this.year = year;
     }
 
-    public Integer getMaxPlayers() {
-        return maxPlayers;
-    }
-
-    public void setMaxPlayers(Integer maxPlayers) {
-        this.maxPlayers = maxPlayers;
-    }
-
     public Integer getMinPlayers() {
         return minPlayers;
     }
@@ -143,6 +112,14 @@ public class Game {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Integer getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public void setMaxPlayers(Integer maxPlayers) {
+        this.maxPlayers = maxPlayers;
     }
 
     public Integer getMinPlayTime() {
@@ -183,13 +160,5 @@ public class Game {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public List<Play> getPlays() {
-        return plays;
-    }
-
-    public void setPlays(List<Play> plays) {
-        this.plays = plays;
     }
 }
