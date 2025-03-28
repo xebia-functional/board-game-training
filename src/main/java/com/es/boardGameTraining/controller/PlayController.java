@@ -7,10 +7,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/plays")
 public class PlayController {
     @Autowired
     private PlayService playService;
 
+    @GetMapping("/")
+    public ResponseEntity<List<PlayDTO>> getAllPlays() {
+        return new ResponseEntity<>(playService.getAllPlays(), HttpStatus.OK);
+    }
 }
