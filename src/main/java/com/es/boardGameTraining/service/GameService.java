@@ -17,7 +17,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GameService {
@@ -50,6 +52,27 @@ public class GameService {
 
         return gameDTOs;
     }
+
+
+    public List<GameDTO> getGamesByParameter(String parameter) {
+        List<Game> gamesByTitle = gameRepository.findByTitleContaining(parameter);
+        List<Game> gamesByAuthor = gameRepository.findByAuthorContaining(parameter);
+        List<Game> gamesByArtist = gameRepository.findByArtistContaining(parameter);
+
+        Set<Game> allGames = new HashSet<>();
+        allGames.addAll(gamesByTitle);
+        allGames.addAll(gamesByAuthor);
+        allGames.addAll(gamesByArtist);
+
+        List<GameDTO> gameDTOs = new ArrayList<>();
+        for (Game game : allGames) {
+            gameDTOs.add(mapper.entityToDTO(game));
+        }
+
+        return gameDTOs;
+    }
+
+
 
     public List<GameBggDTO> searchGames(String name) {
 
