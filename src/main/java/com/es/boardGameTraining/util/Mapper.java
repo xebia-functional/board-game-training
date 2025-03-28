@@ -49,7 +49,7 @@ public class Mapper {
         List<Player> players = new ArrayList<>();
         Player winner = null;
 
-        for (PlayerDTO player : dto.getPlayPlayers()) {
+        for (PlayerDTO player : dto.getPlayers()) {
             players.add(dtoToEntity(player));
         }
 
