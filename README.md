@@ -3,6 +3,65 @@
 ## Project Name
 **Board Game and Match Management System**
 
+## Cloning and Running the Project
+
+To get started with the project, follow these steps:
+
+### 1. Clone the repository
+```sh
+git clone https://github.com/xebia-functional/board-game-training.git
+```
+
+### 2. Configure `application.properties`
+Create or modify the `src/main/resources/application.properties` file with the following example configuration:
+
+```properties
+spring.application.name=boardGameTraining
+
+# Server Configuration
+server.port=8080
+
+# JPA properties
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.globally_quoted_identifiers=true
+spring.jpa.show-sql=true
+
+# PostgreSQL configuration
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+#Database properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/yourDatabaseName
+spring.datasource.username=postgres
+spring.datasource.password=yourPassword
+```
+### 3. Build and Run the Project
+#### Using Maven
+```sh
+mvn clean install
+mvn spring-boot:run
+```
+
+### Using IntelliJ IDEA
+
+#### Open the Project in IntelliJ IDEA:
+1. Open IntelliJ IDEA.
+2. Select **"Open"** and navigate to the folder where you cloned the project.
+
+#### Configure Maven in IntelliJ:
+1. Once the project is opened, IntelliJ should automatically detect the `pom.xml` file and configure it as a Maven project.
+2. If it is not detected automatically, right-click the `pom.xml` file and select **Add as Maven Project**.
+
+#### Run the Project:
+1. Go to the `BoardGameTrainingApplication` class located in the package `com.es.boardGameTraining`.
+2. Inside the class, click the Play (Run) button at the top right of IntelliJ to run the project.
+
+
+#### Using Docker
+Soon...
+
+Once the application is running, you can access it at `http://localhost:8080`.
+
 ## Endpoints
 
 ### 1. Players - Route prefix: /players
