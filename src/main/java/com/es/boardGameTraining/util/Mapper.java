@@ -1,8 +1,15 @@
 package com.es.boardGameTraining.util;
 
 import com.es.boardGameTraining.dto.GameDTO;
+import com.es.boardGameTraining.dto.PlayDTO;
+import com.es.boardGameTraining.dto.PlayerDTO;
 import com.es.boardGameTraining.model.Game;
+import com.es.boardGameTraining.model.Play;
+import com.es.boardGameTraining.model.Player;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class Mapper {
@@ -12,5 +19,33 @@ public class Mapper {
 
     public Game dtoToEntity(GameDTO dto) {
         return new Game(dto.getBggId(), dto.getTitle(), dto.getAuthors(), dto.getArtists(), dto.getYear(), dto.getMinPlayers(), dto.getMaxPlayers(), dto.getAge(), dto.getMinPlayTime(), dto.getMaxPlayTime(), dto.getUrlImage(), dto.getUrlThumbnail(), dto.getType());
+    }
+
+    public PlayerDTO entityToDTO(Player entity) {
+        return new PlayerDTO(entity.getId(), entity.getName(), entity.getNickname());
+    }
+
+    public Player dtoToEntity(PlayerDTO dto) {
+        return new Player(dto.getName(), dto.getNickname());
+    }
+
+    public PlayDTO entityToDTO(Play entity) {
+        List<PlayerDTO> players = new ArrayList<>();
+
+        for (Player player : entity.getPlayers()) {
+            players.add(entityToDTO(player));
+        }
+
+        return new PlayDTO(entity.getId(), entity.getLocation(), players, entityToDTO(entity.getGame()), entityToDTO(entity.getWinner()));
+    }
+
+    public Play dtoToEntity(PlayDTO dto) {
+        List<Player> players = new ArrayList<>();
+
+        for (PlayerDTO player : dto.getPlayers()) {
+            players.add(dtoToEntity(player));
+        }
+
+        return new Play(dto.getLocation(), players, dtoToEntity(dto.getGame()), dtoToEntity(dto.getWinner()));
     }
 }
