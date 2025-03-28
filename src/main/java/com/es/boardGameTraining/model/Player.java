@@ -1,16 +1,16 @@
 package com.es.boardGameTraining.model;
 
-
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
+@Table(name = "players")
 public class Player {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -28,11 +28,11 @@ public class Player {
         this.nickname = nickname;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
