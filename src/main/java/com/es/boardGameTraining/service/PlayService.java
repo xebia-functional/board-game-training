@@ -1,6 +1,8 @@
 package com.es.boardGameTraining.service;
 
 import com.es.boardGameTraining.dto.PlayCreateDTO;
+import com.es.boardGameTraining.model.Game;
+import com.es.boardGameTraining.repository.GameRepository;
 import com.es.boardGameTraining.repository.PlayRepository;
 import com.es.boardGameTraining.util.Mapper;
 import com.es.boardGameTraining.dto.PlayDTO;
@@ -20,6 +22,9 @@ public class PlayService {
 
     @Autowired
     private PlayRepository playRepository;
+
+    @Autowired
+    private GameRepository gameRepository;
 
     public List<PlayDTO> getAllPlays() {
         List<Play> plays;
@@ -68,6 +73,20 @@ public class PlayService {
 
         if (playCreateDTO.getGame() == null) {
             throw new BadRequestException("Game cannot be null");
+        } else {
+            if (playCreateDTO.getGame() == 0L) {
+                throw new BadRequestException("Incorrect game id");
+            }
+
+            if (playCreateDTO.getGame() < 0L) {
+                throw new BadRequestException("Game id cannot be negative");
+            }
+
+            Game game = gameRepository.findById(playCreateDTO.getGame()).orElse(null);
+
+            if (game == null) {
+                throw new BadRequestException("Game with id " + playCreateDTO.getGame() + " not found");
+            }
         }
 
         if (playCreateDTO.getWinner() != null) {
