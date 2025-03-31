@@ -2,6 +2,7 @@ package com.es.boardGameTraining.util;
 
 import com.es.boardGameTraining.dto.GameDTO;
 import com.es.boardGameTraining.dto.PlayDTO;
+import com.es.boardGameTraining.dto.PlayerCreateDTO;
 import com.es.boardGameTraining.dto.PlayerDTO;
 import com.es.boardGameTraining.model.Game;
 import com.es.boardGameTraining.model.Play;
@@ -26,6 +27,10 @@ public class Mapper {
     }
 
     public Player dtoToEntity(PlayerDTO dto) {
+        return new Player(dto.getName(), dto.getNickname());
+    }
+
+    public Player dtoToEntity(PlayerCreateDTO dto) {
         return new Player(dto.getName(), dto.getNickname());
     }
 

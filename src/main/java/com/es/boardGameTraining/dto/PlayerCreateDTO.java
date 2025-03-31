@@ -1,27 +1,16 @@
 package com.es.boardGameTraining.dto;
 
-import java.util.List;
-
-public class PlayerDTO {
-    private long id;
+public class PlayerCreateDTO {
     private String name;
     private String nickname;
 
-    public PlayerDTO() {}
+    public PlayerCreateDTO() {}
 
-    public PlayerDTO(long id, String name, String nickname) {
-        this.id = id;
+    public PlayerCreateDTO(String name, String nickname) {
+
         this.name = name;
         this.nickname = nickname;
 
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
