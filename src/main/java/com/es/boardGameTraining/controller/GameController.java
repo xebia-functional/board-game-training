@@ -5,10 +5,7 @@ import com.es.boardGameTraining.dto.GameDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.es.boardGameTraining.service.GameService;
 
@@ -25,8 +22,19 @@ public class GameController {
         return new ResponseEntity<>(gameService.getAllGames(), HttpStatus.OK);
     }
 
+    @GetMapping("/{parameter}")
+    public ResponseEntity<List<GameDTO>> getGamesByParameter(@PathVariable String parameter) {
+        return new ResponseEntity<>(gameService.getGamesByParameter(parameter), HttpStatus.OK);
+    }
+
+
     @GetMapping("/search/{name}")
     public ResponseEntity<List<GameBggDTO>> searchGames(@PathVariable String name) {
         return new ResponseEntity<>(gameService.searchGames(name), HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<GameDTO> createGameWithId(@PathVariable String id) {
+        return new ResponseEntity<>(gameService.createGameWithId(id), HttpStatus.OK);
     }
 }
