@@ -31,9 +31,9 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 #Database properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/yourDatabaseName
+spring.datasource.url=jdbc:postgresql://localhost:5490/board-game-training-db
 spring.datasource.username=postgres
-spring.datasource.password=yourPassword
+spring.datasource.password=postgres
 ```
 ### 3. Build and Run the Project
 #### Using Maven
@@ -56,11 +56,53 @@ mvn spring-boot:run
 1. Go to the `BoardGameTrainingApplication` class located in the package `com.es.boardGameTraining`.
 2. Inside the class, click the Play (Run) button at the top right of IntelliJ to run the project.
 
+### Using Docker for the Database
 
-#### Using Docker
-Soon...
+1. **Make sure you have Docker and Docker Compose installed on your machine.**
 
-Once the application is running, you can access it at `http://localhost:8080`.
+2. **Run the following command to start the PostgreSQL database container:**
+   ```sh
+   docker-compose up -d
+
+3. Access the postgreSQL database using:
+
+   - **Database URL**: `jbdc:postgresql://localhost:5490/board-game-training-bd`
+   - **Username**: `postgres`
+   - **Password**: `postgres`
+- Once the application is running, you can access it at `http://localhost:8080`
+
+## Docker Compose Configuration
+
+The project use Docker Compose to spin up a PostgreSQL container, here is a summary of the configuration form .yml: 
+
+    
+    services:
+    brain-ai-vector-store:
+    container_name: board-game-training-db
+    image: "pgvector/pgvector:pg17"
+    volumes:
+    - ./postgres-dev-data/17/data:/var/lib/postgresql/data
+    ports:
+      - "5490:5432"
+      expose:
+      - "5490"
+      healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 2s
+      timeout: 2s
+      retries: 5
+      restart: always
+      environment:
+      POSTGRES_DB: board-game-training-db
+      POSTGRES_USER: ${BOARD_GAME_TRAINING_DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${BOARD_GAME_TRAINING_DB_PASSWORD:-postgres}
+
+
+### 5 Notes on Docker and Batabase
+
+- If you wish to modify the database name, username, or password, you can do so by changing the values in the `docker-compose.yml` and the `application.properties` file. 
+- The PostgreSQL service in Docker will be exposed on port `5490`
+
 
 ## Endpoints
 
