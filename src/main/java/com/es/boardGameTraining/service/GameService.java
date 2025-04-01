@@ -69,4 +69,21 @@ public class GameService {
             throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage());
         }
     }
+
+    public GameDTO createGame(GameDTO gameDTO) {
+        if (gameDTO == null) {
+            throw new BadRequestException("Game data is required");
+        }
+
+        Game game = mapper.dtoToEntity(gameDTO);
+
+        try {
+            Game savedGame = gameRepository.save(game);
+
+            return mapper.entityToDTO(savedGame);
+        } catch (Exception e) {
+            throw new DataBaseException("Error while saving game: " + e.getMessage());
+        }
+    }
+
 }
