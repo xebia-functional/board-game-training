@@ -33,11 +33,3 @@ public class GameController {
         return new ResponseEntity<>(createdGame, HttpStatus.CREATED);
     }
 }
-
-
-
-Changes made to pom.xml, installing dependencies for mockito-core
-
-Changes made to tests, with several tests performed, simulating different situations
-
-A create method was created for the service and the controller and tested with Postman to verify its functionality
