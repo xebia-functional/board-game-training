@@ -31,7 +31,7 @@ spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 #Database properties
-spring.datasource.url=jdbc:postgresql://localhost:5490/board-game-training-db
+spring.datasource.url=jdbc:postgresql://localhost:5432/yourDatabaseName
 spring.datasource.username=postgres
 spring.datasource.password=postgres
 ```
