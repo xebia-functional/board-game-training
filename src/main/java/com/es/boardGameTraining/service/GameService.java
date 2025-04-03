@@ -86,4 +86,20 @@ public class GameService {
         }
     }
 
+    public void deleteGame(Long id) {
+        if (id == null) {
+            throw new BadRequestException("Game ID is required");
+        }
+
+        try {
+            if (!gameRepository.existsById(id)) {
+                throw new BadRequestException("Game not found with ID: " + id);
+            }
+            gameRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new DataBaseException("Error while deleting game: " + e.getMessage());
+        }
+    }
+
+
 }

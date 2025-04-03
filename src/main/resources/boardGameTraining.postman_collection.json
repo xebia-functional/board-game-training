@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "42e0a477-0243-426e-9bda-9c9761de1afc",
+		"name": "boardGameTraining",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43648893",
+		"_collection_link": "https://jesus-2265184.postman.co/workspace/Jesus's-Workspace~12180f05-564c-4f73-89d1-121bb062b470/collection/43648893-42e0a477-0243-426e-9bda-9c9761de1afc?action=share&source=collection_link&creator=43648893"
+	},
+	"item": [
+		{
+			"name": "get games",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"bggId\": 161936,\n    \"title\": \"Dead of Winter: A Crossroads Game\",\n    \"authors\": [\"Jonathan Gilmour\", \"Isaac Vega\"],\n    \"artists\": [\"Fernanda Suárez\"],\n    \"year\": 2014,\n    \"minPlayers\": 2,\n    \"maxPlayers\": 5,\n    \"age\": 13,\n    \"minPlayTime\": 60,\n    \"maxPlayTime\": 120,\n    \"urlImage\": \"https://example.com/deadofwinter.jpg\",\n    \"urlThumbnail\": \"https://example.com/deadofwinter_thumb.jpg\",\n    \"type\": \"Cooperative, Semi-Cooperative\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/games/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"games",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post games",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/games/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"games",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "del games",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/games/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"games",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
