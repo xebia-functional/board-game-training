@@ -12,7 +12,7 @@ public class BoardGameTrainingApplication {
 		SpringApplication.run(BoardGameTrainingApplication.class, args);
 	}
 
-	@Bean // Creacion mas explicita que el @Autowired
+	@Bean // More explicit creation than @Autowired
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}

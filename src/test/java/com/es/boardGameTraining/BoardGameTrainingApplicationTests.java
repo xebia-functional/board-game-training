@@ -29,7 +29,7 @@ class BoardGameTrainingApplicationTests {
 		 g.setType(type);
 		 g.setYear(year);
 
-		 assertEquals(bggID, g.getBggId()); // comprueba que el parametro que recibe es igual que el contenido de bggID
+		 assertEquals(bggID, g.getBggId()); // checks that the parameter it receives is equal to the content of bggID
 		 assertEquals(title, g.getTitle());
 		 assertEquals(urlImg, g.getUrlImage());
 		 assertEquals(type, g.getType());
@@ -66,12 +66,12 @@ class BoardGameTrainingApplicationTests {
 	}
 
 
-	// verifica si las propiedades de la clase Game tienen valores predertminados esperados, que en este caso son 0
+	// check if the properties of the Game class have expected default values, which in this case are 0
 	@Test
 	public void testGameWithDefaultValues() {
 		Game g = new Game();
 
-		assertEquals(null, g.getMinPlayers());  // Si el valor predeterminado es 0
+		assertEquals(null, g.getMinPlayers());  // If the default value is 0
 		assertEquals(null, g.getMaxPlayers());
 		assertEquals(null, g.getMinPlayTime());
 		assertEquals(null, g.getMaxPlayTime());
@@ -142,11 +142,11 @@ class BoardGameTrainingApplicationTests {
 		g.setType(type);
 		g.setYear(year);
 
-		assertEquals(title, g.getTitle());  // Verificar el título inicial
+		assertEquals(title, g.getTitle()); // Check the initial title
 
 		g.setTitle(updatedTitle);
 
-		assertEquals(updatedTitle, g.getTitle());  // Verificar el título después de la actualización
+		assertEquals(updatedTitle, g.getTitle());  // Check the title after the update
 	}
 
 }

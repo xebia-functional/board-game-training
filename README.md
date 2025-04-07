@@ -69,40 +69,15 @@ mvn spring-boot:run
    - **Database URL**: `jbdc:postgresql://localhost:5490/board-game-training-bd`
    - **Username**: `postgres`
    - **Password**: `postgres`
-- Once the application is running, you can access it at `http://localhost:8080`
-
+- The PostgreSQL service in Docker will be exposed on port `5490`
 ## Docker Compose Configuration
 
-The project use Docker Compose to spin up a PostgreSQL container, here is a summary of the configuration form .yml: 
-
-    
-    services:
-    brain-ai-vector-store:
-    container_name: board-game-training-db
-    image: "pgvector/pgvector:pg17"
-    volumes:
-    - ./postgres-dev-data/17/data:/var/lib/postgresql/data
-    ports:
-      - "5490:5432"
-      expose:
-      - "5490"
-      healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "postgres" ]
-      interval: 2s
-      timeout: 2s
-      retries: 5
-      restart: always
-      environment:
-      POSTGRES_DB: board-game-training-db
-      POSTGRES_USER: ${BOARD_GAME_TRAINING_DB_USERNAME:-postgres}
-      POSTGRES_PASSWORD: ${BOARD_GAME_TRAINING_DB_PASSWORD:-postgres}
-
+The project uses Docker Compose to spin up a PostgreSQL container, please check the file to see the details: [docker-compose.yml](docker-compose.yml).
 
 ### 5 Notes on Docker and Batabase
 
-- If you wish to modify the database name, username, or password, you can do so by changing the values in the `docker-compose.yml` and the `application.properties` file. 
+- If you wish to modify the database name, username, or password, you can do so by changing the values in the [`docker-compose.yml`](docker-compose.yml) and the [`application.properties`](src/main/resources/application.properties) file.
 - The PostgreSQL service in Docker will be exposed on port `5490`
-
 
 ## Endpoints
 
