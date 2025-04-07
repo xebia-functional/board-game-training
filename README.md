@@ -33,7 +33,7 @@ spring.datasource.driver-class-name=org.postgresql.Driver
 #Database properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/yourDatabaseName
 spring.datasource.username=postgres
-spring.datasource.password=yourPassword
+spring.datasource.password=postgres
 ```
 ### 3. Build and Run the Project
 #### Using Maven
@@ -56,11 +56,28 @@ mvn spring-boot:run
 1. Go to the `BoardGameTrainingApplication` class located in the package `com.es.boardGameTraining`.
 2. Inside the class, click the Play (Run) button at the top right of IntelliJ to run the project.
 
+### Using Docker for the Database
 
-#### Using Docker
-Soon...
+1. **Make sure you have Docker and Docker Compose installed on your machine.**
 
-Once the application is running, you can access it at `http://localhost:8080`.
+2. **Run the following command to start the PostgreSQL database container:**
+   ```sh
+   docker-compose up -d
+
+3. Access the postgreSQL database using:
+
+   - **Database URL**: `jbdc:postgresql://localhost:5490/board-game-training-bd`
+   - **Username**: `postgres`
+   - **Password**: `postgres`
+- The PostgreSQL service in Docker will be exposed on port `5490`
+## Docker Compose Configuration
+
+The project uses Docker Compose to spin up a PostgreSQL container, please check the file to see the details: [docker-compose.yml](docker-compose.yml).
+
+### 5 Notes on Docker and Batabase
+
+- If you wish to modify the database name, username, or password, you can do so by changing the values in the [`docker-compose.yml`](docker-compose.yml) and the [`application.properties`](src/main/resources/application.properties) file.
+- The PostgreSQL service in Docker will be exposed on port `5490`
 
 ## Endpoints
 
