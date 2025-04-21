@@ -27,7 +27,6 @@ public class GameController {
         return new ResponseEntity<>(gameService.searchGames(name), HttpStatus.OK);
     }
 
-
     @PostMapping("/{id}")
     public ResponseEntity<GameDTO> createGameWithId(@PathVariable String id) {
         return new ResponseEntity<>(gameService.createGameWithId(id), HttpStatus.OK);
@@ -44,5 +43,4 @@ public class GameController {
         gameService.deleteGame(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }
