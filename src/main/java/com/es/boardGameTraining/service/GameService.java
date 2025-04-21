@@ -134,8 +134,43 @@ public class GameService {
             gameRepository.save(game);
 
             return mapper.entityToDTO(game);
+        } catch (NotFoundException | BadRequestException e) {
+            throw e;
         } catch (Exception e) {
-            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage());
+            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage(), e);
         }
     }
+
+    public GameDTO createGame(GameDTO gameDTO) {
+        if (gameDTO == null) {
+            throw new BadRequestException("Game data is required");
+        }
+
+        Game game = mapper.dtoToEntity(gameDTO);
+
+        try {
+            Game savedGame = gameRepository.save(game);
+
+            return mapper.entityToDTO(savedGame);
+        } catch (Exception e) {
+            throw new DataBaseException("Error while saving game: " + e.getMessage());
+        }
+    }
+
+    public void deleteGame(Long id) {
+        if (id == null) {
+            throw new BadRequestException("Game ID is required");
+        }
+
+        try {
+            if (!gameRepository.existsById(id)) {
+                throw new BadRequestException("Game not found with ID: " + id);
+            }
+            gameRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new DataBaseException("Error while deleting game: " + e.getMessage());
+        }
+    }
+
+
 }
