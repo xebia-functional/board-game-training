@@ -27,8 +27,22 @@ public class GameController {
         return new ResponseEntity<>(gameService.searchGames(name), HttpStatus.OK);
     }
 
+
     @PostMapping("/{id}")
     public ResponseEntity<GameDTO> createGameWithId(@PathVariable String id) {
         return new ResponseEntity<>(gameService.createGameWithId(id), HttpStatus.OK);
     }
+
+    @PostMapping("/")
+    public ResponseEntity<GameDTO> createGame(@RequestBody GameDTO gameDTO) {
+        GameDTO createdGame = gameService.createGame(gameDTO);
+        return new ResponseEntity<>(createdGame, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGame(@PathVariable Long id) {
+        gameService.deleteGame(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
