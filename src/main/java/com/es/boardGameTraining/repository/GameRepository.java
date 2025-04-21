@@ -20,5 +20,5 @@ public interface GameRepository extends  JpaRepository<Game, Long> {
     List<Game> findByAuthorContaining(String author);
 
     @NativeQuery("SELECT * FROM games g WHERE EXISTS (SELECT 1 FROM unnest(g.artists) AS artist WHERE artist ILIKE %?1%)")
-    List<Game> findByArtistContaining(String author);
+    List<Game> findByArtistContaining(String artist);
 }
