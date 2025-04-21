@@ -111,8 +111,10 @@ public class GameService {
             gameRepository.save(game);
 
             return mapper.entityToDTO(game);
+        } catch (NotFoundException | BadRequestException e) {
+            throw e;
         } catch (Exception e) {
-            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage());
+            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage(), e);
         }
     }
 
