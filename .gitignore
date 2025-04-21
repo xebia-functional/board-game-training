@@ -40,3 +40,4 @@ out/
 *.pem
 
 postgres-dev-data
+.DS_Store
