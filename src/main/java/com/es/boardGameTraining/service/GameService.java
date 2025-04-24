@@ -103,7 +103,7 @@ public class GameService {
         try {
             idParsed = Integer.parseInt(id);
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("Id must be a number");
+            throw new NumberFormatException("Id must be a number: " + e.getMessage());
         }
 
         URI uri = UriComponentsBuilder.newInstance()
@@ -118,7 +118,13 @@ public class GameService {
         try {
             ResponseEntity<BggGameDetailsResponse> response = restTemplate.getForEntity(uri, BggGameDetailsResponse.class);
 
-            BggGameDetailsResponse.BggGameItem gameDto = Objects.requireNonNull(response.getBody()).getItems().get(0);
+            BggGameDetailsResponse gameDtoResponse = Objects.requireNonNull(response.getBody());
+
+            if (gameDtoResponse.getItems() == null || gameDtoResponse.getItems().isEmpty()) {
+                throw new NotFoundException("Any game with bggId " + id + " was found");
+            }
+
+            BggGameDetailsResponse.BggGameItem gameDto = gameDtoResponse.getItems().get(0);
 
             Game game = mapper.dtoToEntity(gameDto);
 
