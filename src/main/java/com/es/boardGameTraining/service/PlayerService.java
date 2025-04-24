@@ -64,6 +64,8 @@ public class PlayerService {
             }
 
             playerRepository.save(player);
+        } catch (BadRequestException e) {
+            throw e;
         } catch (Exception e) {
             throw new DataBaseException("Database unexpected error: " + e.getMessage());
         }
