@@ -1,7 +1,9 @@
 package com.es.boardGameTraining.service;
 
+import com.es.boardGameTraining.dto.BggResponseWrapper;
 import com.es.boardGameTraining.dto.GameBggDTO;
 import com.es.boardGameTraining.dto.GameDTO;
+import com.es.boardGameTraining.dto.ResponseBGGAPI;
 import com.es.boardGameTraining.model.Game;
 import com.es.boardGameTraining.util.Mapper;
 import com.es.boardGameTraining.util.ParseXmlResponse;
@@ -16,10 +18,9 @@ import com.es.boardGameTraining.repository.GameRepository;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.net.URI;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService {
@@ -75,24 +76,33 @@ public class GameService {
 
 
     public List<GameBggDTO> searchGames(String name) {
-
         if (name == null || name.isBlank()) {
             throw new BadRequestException("Name is required");
         }
 
-        String url = UriComponentsBuilder
-                .fromHttpUrl("https://boardgamegeek.com/xmlapi2/search")
+        URI uri = UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(8081)
+                .path("/search")
                 .queryParam("query", name)
-                .queryParam("type", "boardgame")
-                .toUriString();
+                .build()
+                .toUri();
 
         try {
-            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-            return parseXmlResponse.parseXmlResponseGameBGG(response.getBody());
+            ResponseEntity<BggResponseWrapper> response = restTemplate.getForEntity(uri, BggResponseWrapper.class);
+            List<ResponseBGGAPI> rawGames = Objects.requireNonNull(response.getBody()).getItems();
+
+            return rawGames.stream()
+                    .map(ResponseBGGAPI::toGameDTO)
+                    .collect(Collectors.toList());
+
         } catch (Exception e) {
-            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage());
+            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage(), e);
         }
     }
+
+
 
     public GameDTO createGameWithId(String id) {
         int idParsed = 0;
