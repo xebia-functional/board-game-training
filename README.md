@@ -109,7 +109,7 @@ The project uses Docker Compose to spin up a PostgreSQL container, please check 
     - **Output**: List of all GameDTO objects.
     - **Exceptions**:
       - Internal Server Error (Error 500): Internal database error.
-  - `GET /search/{parameter}`: Retrieves game information by title, author, or age.
+  - `GET /search/{parameter}`: Retrieves game information by title, author, or artist.
     - **Input**: `parameter`.
     - **Output**: List of GameDTO objects.
     - **Exceptions**:
