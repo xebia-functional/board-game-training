@@ -23,7 +23,7 @@ public class Play {
     private List<Player> players;
 
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_game", referencedColumnName = "id")
     private Game game;
 

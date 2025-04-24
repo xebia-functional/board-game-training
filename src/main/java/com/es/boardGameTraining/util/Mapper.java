@@ -1,6 +1,7 @@
 package com.es.boardGameTraining.util;
 
 import com.es.boardGameTraining.dto.GameDTO;
+import com.es.boardGameTraining.dto.PlayCreateDTO;
 import com.es.boardGameTraining.dto.PlayDTO;
 import com.es.boardGameTraining.dto.PlayerDTO;
 import com.es.boardGameTraining.model.Game;
@@ -44,7 +45,6 @@ public class Mapper {
         return new PlayDTO(entity.getId(), entity.getLocation(), players, entityToDTO(entity.getGame()), winner);
     }
 
-
     public Play dtoToEntity(PlayDTO dto) {
         List<Player> players = new ArrayList<>();
         Player winner = null;
@@ -59,5 +59,27 @@ public class Mapper {
 
         return new Play(dto.getLocation(), players, dtoToEntity(dto.getGame()), winner);
     }
+
+    public Play dtoToEntity(PlayCreateDTO dto) {
+        List<Player> players = new ArrayList<>();
+        Player winner = null;
+        Game game = new Game();
+        game.setId(dto.getGame());
+
+        for (Long player : dto.getPlayers()) {
+            Player playerValue = new Player();
+            playerValue.setId(player);
+            players.add(playerValue);
+        }
+
+        if (dto.getWinner() != null) {
+            Player playerValue = new Player();
+            playerValue.setId(dto.getWinner());
+            winner = playerValue;
+        }
+
+        return new Play(dto.getLocation(), players, game, winner);
+    }
+
 
 }
