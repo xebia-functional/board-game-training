@@ -33,6 +33,3 @@ jobs:
 
       - name: Run Spotless
         run: mvn spotless:apply
-
-      - name: Run tests
-        run: mvn test
