@@ -2,21 +2,19 @@ package com.es.boardGameTraining.service;
 
 import com.es.boardGameTraining.dto.*;
 import com.es.boardGameTraining.model.Game;
+import com.es.boardGameTraining.repository.GameRepository;
 import com.es.boardGameTraining.util.Mapper;
 import com.es.boardGameTraining.util.exception.BadRequestException;
 import com.es.boardGameTraining.util.exception.DataBaseException;
 import com.es.boardGameTraining.util.exception.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
-import com.es.boardGameTraining.repository.GameRepository;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 public class GameService {
@@ -47,7 +45,6 @@ public class GameService {
         return gameDTOs;
     }
 
-
     public List<GameDTO> getGamesByParameter(String parameter) {
         List<Game> gamesByTitle = gameRepository.findByTitleContaining(parameter);
         List<Game> gamesByAuthor = gameRepository.findByAuthorContaining(parameter);
@@ -71,22 +68,14 @@ public class GameService {
             throw new BadRequestException("Name is required");
         }
 
-        URI uri = UriComponentsBuilder.newInstance()
-                .scheme("http")
-                .host("localhost")
-                .port(8081)
-                .path("/search")
-                .queryParam("query", name)
-                .build()
-                .toUri();
+        URI uri = UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8081).path("/search")
+                .queryParam("query", name).build().toUri();
 
         try {
             ResponseEntity<BggResponseWrapper> response = restTemplate.getForEntity(uri, BggResponseWrapper.class);
             List<ResponseBGGAPI> rawGames = Objects.requireNonNull(response.getBody()).getItems();
 
-            return rawGames.stream()
-                    .map(ResponseBGGAPI::toGameDTO)
-                    .collect(Collectors.toList());
+            return rawGames.stream().map(ResponseBGGAPI::toGameDTO).collect(Collectors.toList());
 
         } catch (Exception e) {
             throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage(), e);
@@ -106,17 +95,12 @@ public class GameService {
             throw new NumberFormatException("Id must be a number");
         }
 
-        URI uri = UriComponentsBuilder.newInstance()
-                .scheme("http")
-                .host("localhost")
-                .port(8081)
-                .path("/details")
-                .queryParam("id", id)
-                .build()
-                .toUri();
+        URI uri = UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8081).path("/details")
+                .queryParam("id", id).build().toUri();
 
         try {
-            ResponseEntity<BggGameDetailsResponse> response = restTemplate.getForEntity(uri, BggGameDetailsResponse.class);
+            ResponseEntity<BggGameDetailsResponse> response = restTemplate.getForEntity(uri,
+                    BggGameDetailsResponse.class);
 
             BggGameDetailsResponse.BggGameItem gameDto = Objects.requireNonNull(response.getBody()).getItems().get(0);
 

@@ -8,13 +8,12 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class BoardGameTrainingApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BoardGameTrainingApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BoardGameTrainingApplication.class, args);
+    }
 
-	@Bean // More explicit creation than @Autowired
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
-
+    @Bean // More explicit creation than @Autowired
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 }

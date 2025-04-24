@@ -2,14 +2,12 @@ package com.es.boardGameTraining.controller;
 
 import com.es.boardGameTraining.dto.GameBggDTO;
 import com.es.boardGameTraining.dto.GameDTO;
+import com.es.boardGameTraining.service.GameService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.es.boardGameTraining.service.GameService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/games")
@@ -26,7 +24,6 @@ public class GameController {
     public ResponseEntity<List<GameDTO>> getGamesByParameter(@PathVariable String parameter) {
         return new ResponseEntity<>(gameService.getGamesByParameter(parameter), HttpStatus.OK);
     }
-
 
     @GetMapping("/search/{name}")
     public ResponseEntity<List<GameBggDTO>> searchGames(@PathVariable String name) {

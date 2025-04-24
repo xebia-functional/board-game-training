@@ -1,7 +1,6 @@
 package com.es.boardGameTraining.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -53,11 +52,12 @@ public class Game {
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Play> plays;
 
-
     public Game() {
     }
 
-    public Game(Long bggId, String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumbnail, String type) {
+    public Game(Long bggId, String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers,
+            Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage,
+            String urlThumbnail, String type) {
         this.bggId = bggId;
         this.title = title;
         this.authors = authors;

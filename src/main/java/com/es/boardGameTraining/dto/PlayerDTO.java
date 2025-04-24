@@ -5,13 +5,13 @@ public class PlayerDTO {
     private String name;
     private String nickname;
 
-    public PlayerDTO() {}
+    public PlayerDTO() {
+    }
 
     public PlayerDTO(long id, String name, String nickname) {
         this.id = id;
         this.name = name;
         this.nickname = nickname;
-
     }
 
     public long getId() {
@@ -37,5 +37,4 @@ public class PlayerDTO {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
-
 }

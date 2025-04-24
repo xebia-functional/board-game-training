@@ -5,21 +5,33 @@ public class ResponseBGGAPI {
     private Name name;
     private YearPublished yearpublished;
 
-    public String getId() { return id; }
-    public Name getName() { return name; }
-    public YearPublished getYearpublished() { return yearpublished; }
+    public String getId() {
+        return id;
+    }
+
+    public Name getName() {
+        return name;
+    }
+
+    public YearPublished getYearpublished() {
+        return yearpublished;
+    }
 
     public static class Name {
         private String type;
         private String value;
 
-        public String getValue() { return value; }
+        public String getValue() {
+            return value;
+        }
     }
 
     public static class YearPublished {
         private String value;
 
-        public String getValue() { return value; }
+        public String getValue() {
+            return value;
+        }
     }
 
     public GameBggDTO toGameDTO() {
