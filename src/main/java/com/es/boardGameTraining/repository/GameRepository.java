@@ -13,9 +13,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     Optional<Game> findByBggId(Long bggId);
     List<Game> findByTitleContainingIgnoreCase(String title);
 
-    @Query("select g from Game g where g.title like %?1%")
-    List<Game> findByTitleContaining(String title);
-
     @NativeQuery("SELECT * FROM games g WHERE EXISTS (SELECT 1 FROM unnest(g.authors) AS author WHERE author ILIKE %?1%)")
     List<Game> findByAuthorContaining(String author);
 
