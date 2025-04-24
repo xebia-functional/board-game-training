@@ -54,12 +54,17 @@ public class PlayService {
     }
 
     public PlayDTO createPlay(PlayCreateDTO playCreateDTO) {
-        validatePlayCreateDTO(playCreateDTO);
+        ValidatedPlayData validated = validatePlayCreateDTO(playCreateDTO);
 
-        Play play = mapper.dtoToEntity(playCreateDTO);
+        Play play = new Play(
+                playCreateDTO.getLocation(),
+                validated.players(),
+                validated.game(),
+                validated.winner()
+        );
 
         try {
-            playRepository.save(play);
+            play = playRepository.save(play);
         } catch (Exception e) {
             throw new DataBaseException("Database unexpected error: " + e.getMessage());
         }
@@ -67,7 +72,9 @@ public class PlayService {
         return mapper.entityToDTO(play);
     }
 
-    private void validatePlayCreateDTO(PlayCreateDTO playCreateDTO) {
+    public record ValidatedPlayData(List<Player> players, Game game, Player winner) {}
+
+    private ValidatedPlayData validatePlayCreateDTO(PlayCreateDTO playCreateDTO) {
         if (playCreateDTO == null) {
             throw new BadRequestException("Body cannot be null");
         }
@@ -81,7 +88,6 @@ public class PlayService {
         }
 
         List<Long> requestedPlayerIds = playCreateDTO.getPlayers();
-
         List<Player> players = playerRepository.findAllById(requestedPlayerIds);
 
         Set<Long> existingPlayerIds = players.stream()
@@ -96,37 +102,33 @@ public class PlayService {
             throw new NotFoundException("Players not found with IDs: " + notExistPlayers);
         }
 
-
         if (playCreateDTO.getGame() == null) {
             throw new BadRequestException("Game cannot be null");
-        } else {
-            if (playCreateDTO.getGame() == 0L) {
-                throw new BadRequestException("Incorrect game id");
-            }
-
-            if (playCreateDTO.getGame() < 0L) {
-                throw new BadRequestException("Game id cannot be negative");
-            }
-
-            Game game = gameRepository.findById(playCreateDTO.getGame()).orElse(null);
-
-            if (game == null) {
-                throw new BadRequestException("Game with id " + playCreateDTO.getGame() + " not found");
-            }
         }
 
-        if (playCreateDTO.getWinner() != null) {
-            if (playCreateDTO.getWinner() == 0L) {
-                throw new BadRequestException("Incorrect winner id");
-            }
+        if (playCreateDTO.getGame() <= 0L) {
+            throw new BadRequestException("Incorrect game id");
+        }
 
-            if (playCreateDTO.getWinner() < 0L) {
-                throw new BadRequestException("Winner id cannot be negative");
+        Game game = gameRepository.findById(playCreateDTO.getGame())
+                .orElseThrow(() -> new BadRequestException("Game with id " + playCreateDTO.getGame() + " not found"));
+
+        Player winner = null;
+        if (playCreateDTO.getWinner() != null) {
+            if (playCreateDTO.getWinner() <= 0L) {
+                throw new BadRequestException("Incorrect winner id");
             }
 
             if (!playCreateDTO.getPlayers().contains(playCreateDTO.getWinner())) {
                 throw new BadRequestException("Incorrect winner id. Winner id must be one of the players");
             }
+
+            winner = players.stream()
+                    .filter(p -> p.getId().equals(playCreateDTO.getWinner()))
+                    .findFirst()
+                    .orElseThrow(() -> new NotFoundException("Winner with id " + playCreateDTO.getWinner() + " not found"));
         }
+
+        return new ValidatedPlayData(players, game, winner);
     }
 }
