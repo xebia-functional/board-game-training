@@ -20,6 +20,11 @@ public class GameController {
         return new ResponseEntity<>(gameService.getAllGames(), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<GameDTO> findGameById(@PathVariable String id) {
+        return new ResponseEntity<>(gameService.getGameById(id), HttpStatus.OK);
+    }
+
     @GetMapping("/search/{parameter}")
     public ResponseEntity<List<GameDTO>> searchGames(@PathVariable String parameter) {
         return new ResponseEntity<>(gameService.searchGames(parameter), HttpStatus.OK);
