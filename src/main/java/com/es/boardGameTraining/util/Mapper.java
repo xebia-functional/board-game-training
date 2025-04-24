@@ -1,10 +1,6 @@
 package com.es.boardGameTraining.util;
 
-import com.es.boardGameTraining.dto.GameDTO;
-import com.es.boardGameTraining.dto.PlayCreateDTO;
-import com.es.boardGameTraining.dto.PlayDTO;
-import com.es.boardGameTraining.dto.PlayerCreateDTO;
-import com.es.boardGameTraining.dto.PlayerDTO;
+import com.es.boardGameTraining.dto.*;
 import com.es.boardGameTraining.model.Game;
 import com.es.boardGameTraining.model.Play;
 import com.es.boardGameTraining.model.Player;
@@ -12,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class Mapper {
@@ -21,6 +18,24 @@ public class Mapper {
 
     public Game dtoToEntity(GameDTO dto) {
         return new Game(dto.getBggId(), dto.getTitle(), dto.getAuthors(), dto.getArtists(), dto.getYear(), dto.getMinPlayers(), dto.getMaxPlayers(), dto.getAge(), dto.getMinPlayTime(), dto.getMaxPlayTime(), dto.getUrlImage(), dto.getUrlThumbnail(), dto.getType());
+    }
+
+    public Game dtoToEntity(BggGameDetailsResponse.BggGameItem dto) {
+        Long parsedId = dto.getId() != null ? Long.parseLong(dto.getId()) : null;
+        String title = dto.getNames().get(0).getValue();
+        List<String> authors = dto.getLinks().stream().filter(link -> link.getType().equals("boardgamepublisher")).map(BggGameDetailsResponse.Link::getValue).toList();
+        List<String> artists = dto.getLinks().stream().filter(link -> link.getType().equals("boardgamedesigner")).map(BggGameDetailsResponse.Link::getValue).toList();
+        Integer year = dto.getYearpublished().getValue() != null ? Integer.parseInt(dto.getYearpublished().getValue()) : null;
+        Integer minPlayers = dto.getMinplayers().getValue() != null ? Integer.parseInt(dto.getMinplayers().getValue()) : null;
+        Integer maxPlayers = dto.getMaxplayers().getValue() != null ? Integer.parseInt(dto.getMaxplayers().getValue()) : null;
+        Integer age = dto.getMinage().getValue() != null ? Integer.parseInt(dto.getMinage().getValue()) : null;
+        Integer minPlayTime = dto.getMinplaytime().getValue() != null ? Integer.parseInt(dto.getMinplaytime().getValue()) : null;
+        Integer maxPlayTime = dto.getMaxplaytime().getValue() != null ? Integer.parseInt(dto.getMaxplaytime().getValue()) : null;
+        String urlImage = dto.getImage();
+        String urlThumbnail = dto.getThumbnail();
+        String type = dto.getType();
+
+        return new Game(parsedId, title, authors, artists, year, minPlayers, maxPlayers, age, minPlayTime, maxPlayTime, urlImage, urlThumbnail, type);
     }
 
     public PlayerDTO entityToDTO(Player entity) {
