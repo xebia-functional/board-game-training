@@ -63,7 +63,7 @@ public class GameService {
         return gameDTOs;
     }
 
-    public List<GameBggDTO> searchGames(String name) {
+    public List<GameBggDTO> searchGamesBGG(String name) {
         if (name == null || name.isBlank()) {
             throw new BadRequestException("Name is required");
         }
@@ -81,6 +81,25 @@ public class GameService {
             throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage(), e);
         }
     }
+
+    public List<GameDTO> searchGames(String name) {
+        if (name == null || name.isBlank()) {
+            throw new BadRequestException("Name is required");
+        }
+
+        try {
+            List<Game> games = gameRepository.findByTitleContainingIgnoreCase(name);
+            if (games.isEmpty()) {
+                throw new NotFoundException("No games found");
+            }
+            return games.stream().map(mapper::entityToDTO).toList();
+        } catch (NotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Unknown error in DB: " + e.getMessage(), e);
+        }
+    }
+
 
     public GameDTO createGameWithId(String id) {
         int idParsed = 0;
