@@ -25,11 +25,15 @@ public class GameController {
         return new ResponseEntity<>(gameService.getGamesByParameter(parameter), HttpStatus.OK);
     }
 
-    @GetMapping("/search/{name}")
-    public ResponseEntity<List<GameBggDTO>> searchGames(@PathVariable String name) {
-        return new ResponseEntity<>(gameService.searchGames(name), HttpStatus.OK);
+    @GetMapping("/search/bgg/{name}")
+    public ResponseEntity<List<GameBggDTO>> searchGamesBGG(@PathVariable String name) {
+        return new ResponseEntity<>(gameService.searchGamesBGG(name), HttpStatus.OK);
     }
 
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<GameDTO>> searchGames(@PathVariable String name) {
+        return new ResponseEntity<>(gameService.searchGames(name), HttpStatus.OK);
+    }
     @PostMapping("/{id}")
     public ResponseEntity<GameDTO> createGameWithId(@PathVariable String id) {
         return new ResponseEntity<>(gameService.createGameWithId(id), HttpStatus.OK);
