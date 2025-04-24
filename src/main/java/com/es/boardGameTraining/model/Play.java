@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "plays")
 public class Play {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "location")
     private String location;
@@ -39,11 +40,11 @@ public class Play {
         this.winner = winner;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

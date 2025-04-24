@@ -1,7 +1,7 @@
 package com.es.boardGameTraining.dto;
 
 public class PlayerDTO {
-    private int id;
+    private Long id;
 
     private String name;
 
@@ -10,17 +10,17 @@ public class PlayerDTO {
     public PlayerDTO() {
     }
 
-    public PlayerDTO(int id, String name, String nickname) {
+    public PlayerDTO(Long id, String name, String nickname) {
         this.id = id;
         this.name = name;
         this.nickname = nickname;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

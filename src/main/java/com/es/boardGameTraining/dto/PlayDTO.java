@@ -3,7 +3,7 @@ package com.es.boardGameTraining.dto;
 import java.util.List;
 
 public class PlayDTO {
-    private int id;
+    private Long id;
 
     private String location;
 
@@ -15,7 +15,7 @@ public class PlayDTO {
 
     public PlayDTO() {}
 
-    public PlayDTO(int id, String location, List<PlayerDTO> players, GameDTO game, PlayerDTO winner) {
+    public PlayDTO(Long id, String location, List<PlayerDTO> players, GameDTO game, PlayerDTO winner) {
         this.id = id;
         this.location = location;
         this.players = players;
@@ -23,11 +23,11 @@ public class PlayDTO {
         this.winner = winner;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

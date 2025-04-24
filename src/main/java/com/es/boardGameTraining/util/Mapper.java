@@ -31,21 +31,33 @@ public class Mapper {
 
     public PlayDTO entityToDTO(Play entity) {
         List<PlayerDTO> players = new ArrayList<>();
+        PlayerDTO winner = null;
 
         for (Player player : entity.getPlayers()) {
             players.add(entityToDTO(player));
         }
 
-        return new PlayDTO(entity.getId(), entity.getLocation(), players, entityToDTO(entity.getGame()), entityToDTO(entity.getWinner()));
+        if (entity.getWinner() != null) {
+            winner = entityToDTO(entity.getWinner());
+        }
+
+        return new PlayDTO(entity.getId(), entity.getLocation(), players, entityToDTO(entity.getGame()), winner);
     }
+
 
     public Play dtoToEntity(PlayDTO dto) {
         List<Player> players = new ArrayList<>();
+        Player winner = null;
 
         for (PlayerDTO player : dto.getPlayers()) {
             players.add(dtoToEntity(player));
         }
 
-        return new Play(dto.getLocation(), players, dtoToEntity(dto.getGame()), dtoToEntity(dto.getWinner()));
+        if (dto.getWinner() != null) {
+            winner = dtoToEntity(dto.getWinner());
+        }
+
+        return new Play(dto.getLocation(), players, dtoToEntity(dto.getGame()), winner);
     }
+
 }
