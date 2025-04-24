@@ -1,25 +1,20 @@
 package com.es.boardGameTraining.service;
 
-import com.es.boardGameTraining.dto.GameBggDTO;
-import com.es.boardGameTraining.dto.GameDTO;
+import com.es.boardGameTraining.dto.*;
 import com.es.boardGameTraining.model.Game;
+import com.es.boardGameTraining.repository.GameRepository;
 import com.es.boardGameTraining.util.Mapper;
-import com.es.boardGameTraining.util.ParseXmlResponse;
 import com.es.boardGameTraining.util.exception.BadRequestException;
 import com.es.boardGameTraining.util.exception.DataBaseException;
 import com.es.boardGameTraining.util.exception.NotFoundException;
+import java.net.URI;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.es.boardGameTraining.repository.GameRepository;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Service
 public class GameService {
@@ -31,9 +26,6 @@ public class GameService {
 
     @Autowired
     private RestTemplate restTemplate;
-
-    @Autowired
-    private ParseXmlResponse parseXmlResponse;
 
     public List<GameDTO> getAllGames() {
         List<Game> games;
@@ -53,7 +45,6 @@ public class GameService {
         return gameDTOs;
     }
 
-
     public List<GameDTO> getGamesByParameter(String parameter) {
         List<Game> gamesByTitle = gameRepository.findByTitleContaining(parameter);
         List<Game> gamesByAuthor = gameRepository.findByAuthorContaining(parameter);
@@ -72,25 +63,22 @@ public class GameService {
         return gameDTOs;
     }
 
-
-
     public List<GameBggDTO> searchGames(String name) {
-
         if (name == null || name.isBlank()) {
             throw new BadRequestException("Name is required");
         }
 
-        String url = UriComponentsBuilder
-                .fromHttpUrl("https://boardgamegeek.com/xmlapi2/search")
-                .queryParam("query", name)
-                .queryParam("type", "boardgame")
-                .toUriString();
+        URI uri = UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8081).path("/search")
+                .queryParam("query", name).build().toUri();
 
         try {
-            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-            return parseXmlResponse.parseXmlResponseGameBGG(response.getBody());
+            ResponseEntity<BggResponseWrapper> response = restTemplate.getForEntity(uri, BggResponseWrapper.class);
+            List<ResponseBGGAPI> rawGames = Objects.requireNonNull(response.getBody()).getItems();
+
+            return rawGames.stream().map(ResponseBGGAPI::toGameDTO).collect(Collectors.toList());
+
         } catch (Exception e) {
-            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage());
+            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage(), e);
         }
     }
 
@@ -107,15 +95,16 @@ public class GameService {
             throw new NumberFormatException("Id must be a number");
         }
 
-        String url = UriComponentsBuilder
-                .fromHttpUrl("https://boardgamegeek.com/xmlapi2/thing")
-                .queryParam("id", id)
-                .toUriString();
+        URI uri = UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8081).path("/details")
+                .queryParam("id", id).build().toUri();
 
         try {
-            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+            ResponseEntity<BggGameDetailsResponse> response = restTemplate.getForEntity(uri,
+                    BggGameDetailsResponse.class);
 
-            Game game = parseXmlResponse.parseXmlResponseGame(response.getBody());
+            BggGameDetailsResponse.BggGameItem gameDto = Objects.requireNonNull(response.getBody()).getItems().get(0);
+
+            Game game = mapper.dtoToEntity(gameDto);
 
             if (game == null) {
                 throw new NotFoundException("Any game with bggId " + id + " was found");
@@ -171,6 +160,4 @@ public class GameService {
             throw new DataBaseException("Error while deleting game: " + e.getMessage());
         }
     }
-
-
 }

@@ -31,9 +31,12 @@ public class GameDTO {
 
     private String type;
 
-    public GameDTO() {}
+    public GameDTO() {
+    }
 
-    public GameDTO(Long id, Long bggId, String title, List<String> authors, List<String> artists, Integer year, Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime, String urlImage, String urlThumbnail, String type) {
+    public GameDTO(Long id, Long bggId, String title, List<String> authors, List<String> artists, Integer year,
+            Integer minPlayers, Integer maxPlayers, Integer age, Integer minPlayTime, Integer maxPlayTime,
+            String urlImage, String urlThumbnail, String type) {
         this.id = id;
         this.bggId = bggId;
         this.title = title;
