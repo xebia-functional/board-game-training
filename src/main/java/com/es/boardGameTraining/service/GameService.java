@@ -1,12 +1,8 @@
 package com.es.boardGameTraining.service;
 
-import com.es.boardGameTraining.dto.BggResponseWrapper;
-import com.es.boardGameTraining.dto.GameBggDTO;
-import com.es.boardGameTraining.dto.GameDTO;
-import com.es.boardGameTraining.dto.ResponseBGGAPI;
+import com.es.boardGameTraining.dto.*;
 import com.es.boardGameTraining.model.Game;
 import com.es.boardGameTraining.util.Mapper;
-import com.es.boardGameTraining.util.ParseXmlResponse;
 import com.es.boardGameTraining.util.exception.BadRequestException;
 import com.es.boardGameTraining.util.exception.DataBaseException;
 import com.es.boardGameTraining.util.exception.NotFoundException;
@@ -32,9 +28,6 @@ public class GameService {
 
     @Autowired
     private RestTemplate restTemplate;
-
-    @Autowired
-    private ParseXmlResponse parseXmlResponse;
 
     public List<GameDTO> getAllGames() {
         List<Game> games;
@@ -73,8 +66,6 @@ public class GameService {
         return gameDTOs;
     }
 
-
-
     public List<GameBggDTO> searchGames(String name) {
         if (name == null || name.isBlank()) {
             throw new BadRequestException("Name is required");
@@ -102,8 +93,6 @@ public class GameService {
         }
     }
 
-
-
     public GameDTO createGameWithId(String id) {
         int idParsed = 0;
 
@@ -117,15 +106,21 @@ public class GameService {
             throw new NumberFormatException("Id must be a number");
         }
 
-        String url = UriComponentsBuilder
-                .fromHttpUrl("https://boardgamegeek.com/xmlapi2/thing")
+        URI uri = UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(8081)
+                .path("/details")
                 .queryParam("id", id)
-                .toUriString();
+                .build()
+                .toUri();
 
         try {
-            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+            ResponseEntity<BggGameDetailsResponse> response = restTemplate.getForEntity(uri, BggGameDetailsResponse.class);
 
-            Game game = parseXmlResponse.parseXmlResponseGame(response.getBody());
+            BggGameDetailsResponse.BggGameItem gameDto = Objects.requireNonNull(response.getBody()).getItems().get(0);
+
+            Game game = mapper.dtoToEntity(gameDto);
 
             if (game == null) {
                 throw new NotFoundException("Any game with bggId " + id + " was found");
@@ -181,6 +176,4 @@ public class GameService {
             throw new DataBaseException("Error while deleting game: " + e.getMessage());
         }
     }
-
-
 }
