@@ -45,8 +45,8 @@ public class GameService {
         return gameDTOs;
     }
 
-    public List<GameDTO> getGamesByParameter(String parameter) {
-        List<Game> gamesByTitle = gameRepository.findByTitleContaining(parameter);
+    public List<GameDTO> searchGames(String parameter) {
+        List<Game> gamesByTitle = gameRepository.findByTitleContainingIgnoreCase(parameter);
         List<Game> gamesByAuthor = gameRepository.findByAuthorContaining(parameter);
         List<Game> gamesByArtist = gameRepository.findByArtistContaining(parameter);
 
@@ -54,6 +54,10 @@ public class GameService {
         allGames.addAll(gamesByTitle);
         allGames.addAll(gamesByAuthor);
         allGames.addAll(gamesByArtist);
+
+        if (allGames.isEmpty()) {
+            throw new NotFoundException("No games found");
+        }
 
         List<GameDTO> gameDTOs = new ArrayList<>();
         for (Game game : allGames) {
@@ -81,25 +85,6 @@ public class GameService {
             throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage(), e);
         }
     }
-
-    public List<GameDTO> searchGames(String name) {
-        if (name == null || name.isBlank()) {
-            throw new BadRequestException("Name is required");
-        }
-
-        try {
-            List<Game> games = gameRepository.findByTitleContainingIgnoreCase(name);
-            if (games.isEmpty()) {
-                throw new NotFoundException("No games found");
-            }
-            return games.stream().map(mapper::entityToDTO).toList();
-        } catch (NotFoundException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RuntimeException("Unknown error in DB: " + e.getMessage(), e);
-        }
-    }
-
 
     public GameDTO createGameWithId(String id) {
         int idParsed = 0;
