@@ -4,9 +4,12 @@ import com.es.boardGameTraining.dto.*;
 import com.es.boardGameTraining.model.Game;
 import com.es.boardGameTraining.model.Play;
 import com.es.boardGameTraining.model.Player;
+import com.es.boardGameTraining.util.exception.BadRequestException;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
 
 @Service
 public class Mapper {
@@ -25,27 +28,22 @@ public class Mapper {
 
     public Game dtoToEntity(BggGameDetailsResponse.BggGameItem dto) {
         Long parsedId = dto.getId() != null ? Long.parseLong(dto.getId()) : null;
+
+        if (dto.getNames() == null || dto.getNames().isEmpty()) {
+            throw new BadRequestException("Game with bggId " + dto.getId() + " has no name");
+        }
+
         String title = dto.getNames().get(0).getValue();
         List<String> authors = dto.getLinks().stream().filter(link -> link.getType().equals("boardgamepublisher"))
                 .map(BggGameDetailsResponse.Link::getValue).toList();
         List<String> artists = dto.getLinks().stream().filter(link -> link.getType().equals("boardgamedesigner"))
                 .map(BggGameDetailsResponse.Link::getValue).toList();
-        Integer year = dto.getYearpublished().getValue() != null
-                ? Integer.parseInt(dto.getYearpublished().getValue())
-                : null;
-        Integer minPlayers = dto.getMinplayers().getValue() != null
-                ? Integer.parseInt(dto.getMinplayers().getValue())
-                : null;
-        Integer maxPlayers = dto.getMaxplayers().getValue() != null
-                ? Integer.parseInt(dto.getMaxplayers().getValue())
-                : null;
-        Integer age = dto.getMinage().getValue() != null ? Integer.parseInt(dto.getMinage().getValue()) : null;
-        Integer minPlayTime = dto.getMinplaytime().getValue() != null
-                ? Integer.parseInt(dto.getMinplaytime().getValue())
-                : null;
-        Integer maxPlayTime = dto.getMaxplaytime().getValue() != null
-                ? Integer.parseInt(dto.getMaxplaytime().getValue())
-                : null;
+        Integer year = dto.getYearpublished() == null ? null : Integer.parseInt(dto.getYearpublished().getValue());
+        Integer minPlayers = dto.getMinplayers() == null ? null : Integer.parseInt(dto.getMinplayers().getValue());
+        Integer maxPlayers = dto.getMaxplayers() == null ? null : Integer.parseInt(dto.getMaxplayers().getValue());
+        Integer age = dto.getMinage() == null ? null : Integer.parseInt(dto.getMinage().getValue());
+        Integer minPlayTime = dto.getMinplaytime() == null ? null : Integer.parseInt(dto.getMinplaytime().getValue());
+        Integer maxPlayTime = dto.getMaxplaytime() == null ? null : Integer.parseInt(dto.getMaxplaytime().getValue());
         String urlImage = dto.getImage();
         String urlThumbnail = dto.getThumbnail();
         String type = dto.getType();
@@ -116,4 +114,5 @@ public class Mapper {
 
         return new Play(dto.getLocation(), players, game, winner);
     }
+
 }
