@@ -20,9 +20,9 @@ public class GameController {
         return new ResponseEntity<>(gameService.getAllGames(), HttpStatus.OK);
     }
 
-    @GetMapping("/{parameter}")
-    public ResponseEntity<List<GameDTO>> getGamesByParameter(@PathVariable String parameter) {
-        return new ResponseEntity<>(gameService.getGamesByParameter(parameter), HttpStatus.OK);
+    @GetMapping("/search/{parameter}")
+    public ResponseEntity<List<GameDTO>> searchGames(@PathVariable String parameter) {
+        return new ResponseEntity<>(gameService.searchGames(parameter), HttpStatus.OK);
     }
 
     @GetMapping("/search/bgg/{name}")
@@ -30,10 +30,6 @@ public class GameController {
         return new ResponseEntity<>(gameService.searchGamesBGG(name), HttpStatus.OK);
     }
 
-    @GetMapping("/search/{name}")
-    public ResponseEntity<List<GameDTO>> searchGames(@PathVariable String name) {
-        return new ResponseEntity<>(gameService.searchGames(name), HttpStatus.OK);
-    }
     @PostMapping("/{id}")
     public ResponseEntity<GameDTO> createGameWithId(@PathVariable String id) {
         return new ResponseEntity<>(gameService.createGameWithId(id), HttpStatus.OK);
