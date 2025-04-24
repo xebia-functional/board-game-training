@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
     Optional<Game> findByBggId(Long bggId);
+    List<Game> findByTitleContainingIgnoreCase(String title);
 
     @Query("select g from Game g where g.title like %?1%")
     List<Game> findByTitleContaining(String title);
