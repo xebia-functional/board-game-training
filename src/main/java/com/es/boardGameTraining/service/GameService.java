@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -26,6 +27,15 @@ public class GameService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${external.service.host}")
+    private String serviceHost;
+
+    @Value("${external.service.port}")
+    private int servicePort;
+
+    @Value("${external.service.scheme}")
+    private String serviceScheme;
 
     public List<GameDTO> getAllGames() {
         List<Game> games;
@@ -90,7 +100,7 @@ public class GameService {
             throw new BadRequestException("Name is required");
         }
 
-        URI uri = UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8081).path("/search")
+        URI uri = UriComponentsBuilder.newInstance().scheme(serviceScheme).host(serviceHost).port(servicePort).path("/search")
                 .queryParam("query", name).build().toUri();
 
         try {
@@ -117,7 +127,7 @@ public class GameService {
             throw new NumberFormatException("Id must be a number: " + e.getMessage());
         }
 
-        URI uri = UriComponentsBuilder.newInstance().scheme("http").host("localhost").port(8081).path("/details")
+        URI uri = UriComponentsBuilder.newInstance().scheme(serviceScheme).host(serviceHost).port(servicePort).path("/details")
                 .queryParam("id", id).build().toUri();
 
         try {
