@@ -34,6 +34,11 @@ spring.datasource.driver-class-name=org.postgresql.Driver
 spring.datasource.url=jdbc:postgresql://localhost:5432/yourDatabaseName
 spring.datasource.username=postgres
 spring.datasource.password=postgres
+
+# Kotlin Parser Info
+external.service.host=localhost
+external.service.port=8081
+external.service.scheme=http
 ```
 ### 3. Build and Run the Project
 #### Using Maven
