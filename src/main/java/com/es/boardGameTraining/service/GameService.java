@@ -45,8 +45,26 @@ public class GameService {
         return gameDTOs;
     }
 
-    public List<GameDTO> getGamesByParameter(String parameter) {
-        List<Game> gamesByTitle = gameRepository.findByTitleContaining(parameter);
+    public GameDTO getGameById(String id) {
+        if (id == null || id.isBlank()) {
+            throw new BadRequestException("Id is required");
+        }
+
+        long idParsed = 0L;
+
+        try {
+            idParsed = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Id must be a number");
+        }
+
+        Game game = gameRepository.findById(idParsed).orElseThrow(() -> new NotFoundException("Game not found with ID: " + id));
+
+        return mapper.entityToDTO(game);
+    }
+
+    public List<GameDTO> searchGames(String parameter) {
+        List<Game> gamesByTitle = gameRepository.findByTitleContainingIgnoreCase(parameter);
         List<Game> gamesByAuthor = gameRepository.findByAuthorContaining(parameter);
         List<Game> gamesByArtist = gameRepository.findByArtistContaining(parameter);
 
@@ -54,6 +72,10 @@ public class GameService {
         allGames.addAll(gamesByTitle);
         allGames.addAll(gamesByAuthor);
         allGames.addAll(gamesByArtist);
+
+        if (allGames.isEmpty()) {
+            throw new NotFoundException("No games found");
+        }
 
         List<GameDTO> gameDTOs = new ArrayList<>();
         for (Game game : allGames) {
@@ -63,7 +85,7 @@ public class GameService {
         return gameDTOs;
     }
 
-    public List<GameBggDTO> searchGames(String name) {
+    public List<GameBggDTO> searchGamesBGG(String name) {
         if (name == null || name.isBlank()) {
             throw new BadRequestException("Name is required");
         }

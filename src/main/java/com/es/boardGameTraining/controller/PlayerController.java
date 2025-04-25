@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/player")
+@RequestMapping("/players")
 public class PlayerController {
 
     @Autowired
@@ -22,8 +22,8 @@ public class PlayerController {
     }
 
     @GetMapping("/{nickname}")
-    public ResponseEntity<List<PlayerDTO>> getPlayerByParameter(@PathVariable String nickname) {
-        return new ResponseEntity<>(playerService.getPlayersByParameter(nickname), HttpStatus.OK);
+    public ResponseEntity<PlayerDTO> getPlayerByParameter(@PathVariable String nickname) {
+        return new ResponseEntity<>(playerService.getPlayerByNickname(nickname), HttpStatus.OK);
     }
 
     @PostMapping("/")
