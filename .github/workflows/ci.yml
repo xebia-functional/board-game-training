@@ -1,13 +1,7 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
-      - 53-github-actions-for-running-spotless-and-tests
   pull_request:
-    branches:
-      - main
 
 jobs:
   build:
