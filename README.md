@@ -145,7 +145,7 @@ The project uses Docker Compose to spin up a PostgreSQL container, please check 
     - **Exceptions**:
       - Internal Server Error (Error 500): Internal database error.
   - `POST /`: Creates a new match.
-    - **Input**: JSON containing `location`, `winner`, and `players`.
+    - **Input**: JSON containing `location`, `winner`, `players` and `game`.
     - **Output**: PlayDTO object.
     - **Exceptions**:
       - Bad Request Exception (Error 400): The location, winner, and players fields cannot be empty.
