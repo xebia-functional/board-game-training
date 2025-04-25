@@ -109,19 +109,18 @@ The project uses Docker Compose to spin up a PostgreSQL container, please check 
     - **Output**: List of all GameDTO objects.
     - **Exceptions**:
       - Internal Server Error (Error 500): Internal database error.
-  - `GET /{parameter}`: Retrieves game information by title, author, or age.
+  - `GET /search/{parameter}`: Retrieves game information by title, author, or artist.
     - **Input**: `parameter`.
     - **Output**: List of GameDTO objects.
     - **Exceptions**:
       - Bad Request Exception (Error 400): The parameter field cannot be empty.
       - Game not found (Error 404): No game matches the given parameters.
       - Internal Server Error (Error 500): Internal database error.
-  - `GET /search/{name)`: Retrieves game information by name from the BGG API.
+  - `GET /search/bgg/{name)`: Retrieves game information by name from the BGG API.
     - **Input**: `name`.
     - **Output**: List of games results from the BGG API.
     - **Exceptions**:
         - Bad Request Exception (Error 400): The name field cannot be empty.
-        - Game not found (Error 404): No game matches the given parameters.
         - Internal Server Error (Error 500): Internal database error.
   - `POST /{id}`: Creates a game using the "id" parameter from the public BGG API.
     - **Input**: `id` parameter.

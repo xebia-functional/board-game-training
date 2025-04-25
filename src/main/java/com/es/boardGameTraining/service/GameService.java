@@ -45,8 +45,8 @@ public class GameService {
         return gameDTOs;
     }
 
-    public List<GameDTO> getGamesByParameter(String parameter) {
-        List<Game> gamesByTitle = gameRepository.findByTitleContaining(parameter);
+    public List<GameDTO> searchGames(String parameter) {
+        List<Game> gamesByTitle = gameRepository.findByTitleContainingIgnoreCase(parameter);
         List<Game> gamesByAuthor = gameRepository.findByAuthorContaining(parameter);
         List<Game> gamesByArtist = gameRepository.findByArtistContaining(parameter);
 
@@ -54,6 +54,10 @@ public class GameService {
         allGames.addAll(gamesByTitle);
         allGames.addAll(gamesByAuthor);
         allGames.addAll(gamesByArtist);
+
+        if (allGames.isEmpty()) {
+            throw new NotFoundException("No games found");
+        }
 
         List<GameDTO> gameDTOs = new ArrayList<>();
         for (Game game : allGames) {
@@ -63,7 +67,7 @@ public class GameService {
         return gameDTOs;
     }
 
-    public List<GameBggDTO> searchGames(String name) {
+    public List<GameBggDTO> searchGamesBGG(String name) {
         if (name == null || name.isBlank()) {
             throw new BadRequestException("Name is required");
         }
