@@ -45,6 +45,24 @@ public class GameService {
         return gameDTOs;
     }
 
+    public GameDTO getGameById(String id) {
+        if (id == null || id.isBlank()) {
+            throw new BadRequestException("Id is required");
+        }
+
+        long idParsed = 0L;
+
+        try {
+            idParsed = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Id must be a number");
+        }
+
+        Game game = gameRepository.findById(idParsed).orElseThrow(() -> new NotFoundException("Game not found with ID: " + id));
+
+        return mapper.entityToDTO(game);
+    }
+
     public List<GameDTO> searchGames(String parameter) {
         List<Game> gamesByTitle = gameRepository.findByTitleContainingIgnoreCase(parameter);
         List<Game> gamesByAuthor = gameRepository.findByAuthorContaining(parameter);
