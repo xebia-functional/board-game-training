@@ -15,13 +15,8 @@ public class Play {
     private String location;
 
     @ManyToMany
-    @JoinTable(
-            name = "play_players",
-            joinColumns = @JoinColumn(name = "play_id"),
-            inverseJoinColumns = @JoinColumn(name = "player_id")
-    )
+    @JoinTable(name = "play_players", joinColumns = @JoinColumn(name = "play_id"), inverseJoinColumns = @JoinColumn(name = "player_id"))
     private List<Player> players;
-
 
     @ManyToOne
     @JoinColumn(name = "id_game", referencedColumnName = "id")
@@ -31,7 +26,8 @@ public class Play {
     @JoinColumn(name = "winner_id", referencedColumnName = "id", nullable = true)
     private Player winner;
 
-    public Play() {}
+    public Play() {
+    }
 
     public Play(String location, List<Player> players, Game game, Player winner) {
         this.location = location;

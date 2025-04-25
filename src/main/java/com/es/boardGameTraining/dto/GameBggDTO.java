@@ -5,7 +5,8 @@ public class GameBggDTO {
     public String name;
     public Integer yearPublished;
 
-    public GameBggDTO() {}
+    public GameBggDTO() {
+    }
 
     public GameBggDTO(Long id, String name, Integer yearPublished) {
         this.id = id;

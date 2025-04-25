@@ -3,15 +3,14 @@ package com.es.boardGameTraining.controller;
 import com.es.boardGameTraining.dto.PlayerCreateDTO;
 import com.es.boardGameTraining.dto.PlayerDTO;
 import com.es.boardGameTraining.service.PlayerService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/player")
+@RequestMapping("/players")
 public class PlayerController {
 
     @Autowired
@@ -23,8 +22,8 @@ public class PlayerController {
     }
 
     @GetMapping("/{nickname}")
-    public ResponseEntity<List<PlayerDTO>> getPlayerByParameter(@PathVariable String nickname) {
-        return new ResponseEntity<>(playerService.getPlayersByParameter(nickname), HttpStatus.OK);
+    public ResponseEntity<PlayerDTO> getPlayerByParameter(@PathVariable String nickname) {
+        return new ResponseEntity<>(playerService.getPlayerByNickname(nickname), HttpStatus.OK);
     }
 
     @PostMapping("/")
