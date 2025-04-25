@@ -1,10 +1,8 @@
 package com.es.boardGameTraining.service;
 
-import com.es.boardGameTraining.dto.GameBggDTO;
-import com.es.boardGameTraining.dto.GameDTO;
+import com.es.boardGameTraining.dto.*;
 import com.es.boardGameTraining.model.Game;
 import com.es.boardGameTraining.util.Mapper;
-import com.es.boardGameTraining.util.ParseXmlResponse;
 import com.es.boardGameTraining.util.exception.BadRequestException;
 import com.es.boardGameTraining.util.exception.DataBaseException;
 import com.es.boardGameTraining.util.exception.NotFoundException;
@@ -16,10 +14,9 @@ import com.es.boardGameTraining.repository.GameRepository;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.net.URI;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService {
@@ -31,9 +28,6 @@ public class GameService {
 
     @Autowired
     private RestTemplate restTemplate;
-
-    @Autowired
-    private ParseXmlResponse parseXmlResponse;
 
     public List<GameDTO> getAllGames() {
         List<Game> games;
@@ -72,25 +66,30 @@ public class GameService {
         return gameDTOs;
     }
 
-
-
     public List<GameBggDTO> searchGames(String name) {
-
         if (name == null || name.isBlank()) {
             throw new BadRequestException("Name is required");
         }
 
-        String url = UriComponentsBuilder
-                .fromHttpUrl("https://boardgamegeek.com/xmlapi2/search")
+        URI uri = UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(8081)
+                .path("/search")
                 .queryParam("query", name)
-                .queryParam("type", "boardgame")
-                .toUriString();
+                .build()
+                .toUri();
 
         try {
-            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-            return parseXmlResponse.parseXmlResponseGameBGG(response.getBody());
+            ResponseEntity<BggResponseWrapper> response = restTemplate.getForEntity(uri, BggResponseWrapper.class);
+            List<ResponseBGGAPI> rawGames = Objects.requireNonNull(response.getBody()).getItems();
+
+            return rawGames.stream()
+                    .map(ResponseBGGAPI::toGameDTO)
+                    .collect(Collectors.toList());
+
         } catch (Exception e) {
-            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage());
+            throw new RuntimeException("Error in BoardGameGeek API: " + e.getMessage(), e);
         }
     }
 
@@ -104,18 +103,30 @@ public class GameService {
         try {
             idParsed = Integer.parseInt(id);
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("Id must be a number");
+            throw new NumberFormatException("Id must be a number: " + e.getMessage());
         }
 
-        String url = UriComponentsBuilder
-                .fromHttpUrl("https://boardgamegeek.com/xmlapi2/thing")
+        URI uri = UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(8081)
+                .path("/details")
                 .queryParam("id", id)
-                .toUriString();
+                .build()
+                .toUri();
 
         try {
-            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+            ResponseEntity<BggGameDetailsResponse> response = restTemplate.getForEntity(uri, BggGameDetailsResponse.class);
 
-            Game game = parseXmlResponse.parseXmlResponseGame(response.getBody());
+            BggGameDetailsResponse gameDtoResponse = Objects.requireNonNull(response.getBody());
+
+            if (gameDtoResponse.getItems() == null || gameDtoResponse.getItems().isEmpty()) {
+                throw new NotFoundException("Any game with bggId " + id + " was found");
+            }
+
+            BggGameDetailsResponse.BggGameItem gameDto = gameDtoResponse.getItems().get(0);
+
+            Game game = mapper.dtoToEntity(gameDto);
 
             if (game == null) {
                 throw new NotFoundException("Any game with bggId " + id + " was found");
@@ -171,6 +182,4 @@ public class GameService {
             throw new DataBaseException("Error while deleting game: " + e.getMessage());
         }
     }
-
-
 }

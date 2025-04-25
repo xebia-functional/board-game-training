@@ -1,7 +1,5 @@
 package com.es.boardGameTraining.dto;
 
-import java.util.List;
-
 public class PlayerDTO {
     private long id;
     private String name;
