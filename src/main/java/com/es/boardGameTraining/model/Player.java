@@ -1,7 +1,6 @@
 package com.es.boardGameTraining.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -21,7 +20,8 @@ public class Player {
     @OneToMany(mappedBy = "winner")
     private List<Play> wonPlays;
 
-    public Player(){}
+    public Player() {
+    }
 
     public Player(String name, String nickname) {
         this.name = name;

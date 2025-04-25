@@ -13,7 +13,8 @@ public class PlayDTO {
 
     private PlayerDTO winner;
 
-    public PlayDTO() {}
+    public PlayDTO() {
+    }
 
     public PlayDTO(Long id, String location, List<PlayerDTO> players, GameDTO game, PlayerDTO winner) {
         this.id = id;

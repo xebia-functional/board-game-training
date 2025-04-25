@@ -12,7 +12,8 @@ public class PlayCreateDTO {
 
     private Long winner;
 
-    public PlayCreateDTO() {}
+    public PlayCreateDTO() {
+    }
 
     public String getLocation() {
         return location;
