@@ -3,18 +3,13 @@ package com.es.boardGameTraining.service;
 import com.es.boardGameTraining.dto.PlayerCreateDTO;
 import com.es.boardGameTraining.dto.PlayerDTO;
 import com.es.boardGameTraining.model.Player;
-import com.es.boardGameTraining.util.Mapper;
-import com.es.boardGameTraining.util.exception.BadRequestException;
-import com.es.boardGameTraining.util.exception.DataBaseException;
-import com.es.boardGameTraining.util.exception.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
 import com.es.boardGameTraining.repository.PlayerRepository;
-
+import com.es.boardGameTraining.util.Mapper;
+import com.es.boardGameTraining.util.exception.DataBaseException;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PlayerService {
@@ -64,7 +59,7 @@ public class PlayerService {
         Player player = mapper.dtoToEntity(playerDTO);
         try {
             playerRepository.save(player);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new DataBaseException("Database unexpected error: " + e.getMessage());
         }
 

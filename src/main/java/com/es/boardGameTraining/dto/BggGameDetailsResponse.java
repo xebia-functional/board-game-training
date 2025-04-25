@@ -30,65 +30,150 @@ public class BggGameDetailsResponse {
         private List<Link> links;
 
         // Getters y setters
-        public String getId() { return id; }
-        public void setId(String id) { this.id = id; }
+        public String getId() {
+            return id;
+        }
 
-        public String getType() { return type; }
-        public void setType(String type) { this.type = type; }
+        public void setId(String id) {
+            this.id = id;
+        }
 
-        public String getThumbnail() { return thumbnail; }
-        public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail; }
+        public String getType() {
+            return type;
+        }
 
-        public String getImage() { return image; }
-        public void setImage(String image) { this.image = image; }
+        public void setType(String type) {
+            this.type = type;
+        }
 
-        public List<Name> getNames() { return names; }
-        public void setNames(List<Name> names) { this.names = names; }
+        public String getThumbnail() {
+            return thumbnail;
+        }
 
-        public String getDescription() { return description; }
-        public void setDescription(String description) { this.description = description; }
+        public void setThumbnail(String thumbnail) {
+            this.thumbnail = thumbnail;
+        }
 
-        public ValueWrapper getYearpublished() { return yearpublished; }
-        public void setYearpublished(ValueWrapper yearpublished) { this.yearpublished = yearpublished; }
+        public String getImage() {
+            return image;
+        }
 
-        public ValueWrapper getMinplayers() { return minplayers; }
-        public void setMinplayers(ValueWrapper minplayers) { this.minplayers = minplayers; }
+        public void setImage(String image) {
+            this.image = image;
+        }
 
-        public ValueWrapper getMaxplayers() { return maxplayers; }
-        public void setMaxplayers(ValueWrapper maxplayers) { this.maxplayers = maxplayers; }
+        public List<Name> getNames() {
+            return names;
+        }
 
-        public ValueWrapper getPlayingtime() { return playingtime; }
-        public void setPlayingtime(ValueWrapper playingtime) { this.playingtime = playingtime; }
+        public void setNames(List<Name> names) {
+            this.names = names;
+        }
 
-        public ValueWrapper getMinplaytime() { return minplaytime; }
-        public void setMinplaytime(ValueWrapper minplaytime) { this.minplaytime = minplaytime; }
+        public String getDescription() {
+            return description;
+        }
 
-        public ValueWrapper getMaxplaytime() { return maxplaytime; }
-        public void setMaxplaytime(ValueWrapper maxplaytime) { this.maxplaytime = maxplaytime; }
+        public void setDescription(String description) {
+            this.description = description;
+        }
 
-        public ValueWrapper getMinage() { return minage; }
-        public void setMinage(ValueWrapper minage) { this.minage = minage; }
+        public ValueWrapper getYearpublished() {
+            return yearpublished;
+        }
 
-        public List<Link> getLinks() { return links; }
-        public void setLinks(List<Link> links) { this.links = links; }
+        public void setYearpublished(ValueWrapper yearpublished) {
+            this.yearpublished = yearpublished;
+        }
+
+        public ValueWrapper getMinplayers() {
+            return minplayers;
+        }
+
+        public void setMinplayers(ValueWrapper minplayers) {
+            this.minplayers = minplayers;
+        }
+
+        public ValueWrapper getMaxplayers() {
+            return maxplayers;
+        }
+
+        public void setMaxplayers(ValueWrapper maxplayers) {
+            this.maxplayers = maxplayers;
+        }
+
+        public ValueWrapper getPlayingtime() {
+            return playingtime;
+        }
+
+        public void setPlayingtime(ValueWrapper playingtime) {
+            this.playingtime = playingtime;
+        }
+
+        public ValueWrapper getMinplaytime() {
+            return minplaytime;
+        }
+
+        public void setMinplaytime(ValueWrapper minplaytime) {
+            this.minplaytime = minplaytime;
+        }
+
+        public ValueWrapper getMaxplaytime() {
+            return maxplaytime;
+        }
+
+        public void setMaxplaytime(ValueWrapper maxplaytime) {
+            this.maxplaytime = maxplaytime;
+        }
+
+        public ValueWrapper getMinage() {
+            return minage;
+        }
+
+        public void setMinage(ValueWrapper minage) {
+            this.minage = minage;
+        }
+
+        public List<Link> getLinks() {
+            return links;
+        }
+
+        public void setLinks(List<Link> links) {
+            this.links = links;
+        }
     }
 
     public static class Name {
         private String type;
         private String value;
 
-        public String getType() { return type; }
-        public void setType(String type) { this.type = type; }
+        public String getType() {
+            return type;
+        }
 
-        public String getValue() { return value; }
-        public void setValue(String value) { this.value = value; }
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
     }
 
     public static class ValueWrapper {
         private String value;
 
-        public String getValue() { return value; }
-        public void setValue(String value) { this.value = value; }
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
     }
 
     public static class Link {
@@ -96,13 +181,28 @@ public class BggGameDetailsResponse {
         private String id;
         private String value;
 
-        public String getType() { return type; }
-        public void setType(String type) { this.type = type; }
+        public String getType() {
+            return type;
+        }
 
-        public String getId() { return id; }
-        public void setId(String id) { this.id = id; }
+        public void setType(String type) {
+            this.type = type;
+        }
 
-        public String getValue() { return value; }
-        public void setValue(String value) { this.value = value; }
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
     }
 }
