@@ -22,7 +22,7 @@ spring.application.name=boardGameTraining
 server.port=8080
 
 # JPA properties
-spring.jpa.hibernate.ddl-auto=update
+spring.jpa.hibernate.ddl-auto=none
 spring.jpa.properties.hibernate.globally_quoted_identifiers=true
 spring.jpa.show-sql=true
 
@@ -39,6 +39,12 @@ spring.datasource.password=postgres
 external.service.host=localhost
 external.service.port=8081
 external.service.scheme=http
+
+# Flyway
+spring.flyway.enabled=true
+spring.flyway.locations=classpath:db/migration
+spring.flyway.baseline-on-migrate=true
+
 ```
 ### 3. Build and Run the Project
 #### Using Maven
