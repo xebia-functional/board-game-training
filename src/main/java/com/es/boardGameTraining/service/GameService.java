@@ -127,6 +127,10 @@ public class GameService {
             throw new NumberFormatException("Id must be a number: " + e.getMessage());
         }
 
+        if (idParsed <= 0) {
+            throw new BadRequestException("Id must be positive");
+        }
+
         URI uri = UriComponentsBuilder.newInstance().scheme(serviceScheme).host(serviceHost).port(servicePort).path("/details")
                 .queryParam("id", id).build().toUri();
 
